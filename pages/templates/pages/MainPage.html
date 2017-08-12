@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<HTML>
+    <HEAD>
+        <meta charset="UTF-8">
+        <TITLE>POLICTICS MAIN PAGE</TITLE> 
+        <link rel="stylesheet" type="text/css" href="CSS/MainPage.css"/>
+        <SCRIPT type="text/javascript" src="jQuery/jquery-3.2.1.min.js"></SCRIPT>
+        <SCRIPT>
+        	$(document).ready(function(){
+                $('a#dropDownBtn').on("click", dropDownFunc);
+        	});
+
+            function dropDownFunc(){
+                var display = $('div#dropDownContent').css("display");
+                if(display == "none"){
+                    $(this).css("color", "#0082ff");
+                    $(this).css("font-weight", "800");
+                }
+                else if(display == "block"){
+                    $(this).css("color", "#646464");
+                    $(this).css("font-weight", "400");
+                }
+
+                $('div#dropDownContent').slideToggle();
+            }
+        </SCRIPT>
+    </HEAD>
+
+    <BODY>
+        <div class="wrapper">
+            <header class="top">
+                <section class="top_titleS">
+                    <div>
+                        <div><a href="MainPage.html">로고 이미지(Ho) _ TAG</a></div>
+                    </div>
+                </section>
+                <nav class="top_listS">
+                    <div>
+                        <ul>
+                            <li><a class="mainA" href="Intro.html">소개</a></li>
+                            <li><a class="mainA" href="Demo.html">데모</a></li>
+                            <li>
+                                <div class="dropDown">
+                                    <a id="dropDownBtn" class="mainA">
+                                        사람들                                
+                                    </a>
+
+                                    <div id="dropDownContent" class="dropDownBox">
+                                        <a>문재인</a>
+                                        <a>홍준표</a>
+                                        <a>안철수</a>
+                                        <a>유승민</a>
+                                        <a>심상정</a>
+                                    </div>    
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+            
+            <section class="mid">
+                <section class="mid_secS">
+                    MainPage
+                </section>
+            </section>
+
+            <footer class="bot">
+                bottom
+            </footer>
+        </div>
+    </BODY>
+</HTML>
