@@ -1,10 +1,11 @@
+{% load staticfiles %}
 <!DOCTYPE HTML>
 <HTML>
     <HEAD>
         <meta charset="UTF-8">
         <TITLE>POLICTICS MAIN PAGE</TITLE> 
-        <link rel="stylesheet" type="text/css" href="CSS/MainPage.css"/>
-        <SCRIPT type="text/javascript" src="jQuery/jquery-3.2.1.min.js"></SCRIPT>
+        <link rel="stylesheet" href="{% static 'css/MainPage.css' %}">
+        <SCRIPT type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></SCRIPT>
         <SCRIPT>
         	$(document).ready(function(){
                 $('a#dropDownBtn').on("click", dropDownFunc);
