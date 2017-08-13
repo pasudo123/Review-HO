@@ -1,0 +1,143 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<HTML>
+    <HEAD>
+        <meta charset="UTF-8">
+        <TITLE>POLICTICS MAIN PAGE</TITLE> 
+        <link rel="stylesheet" type="text/css" href="{% static 'css/Demo.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/MainPage.css' %}"/>
+        <SCRIPT type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></SCRIPT>
+        <SCRIPT>
+        	$(document).ready(function(){
+                $('a#dropDownBtn').on("click", dropDownFunc);
+                $('button#getAnalyze_button').on("click", getAnalyze);
+        	});
+
+            function dropDownFunc(){
+                var display = $('div#dropDownContent').css("display");
+                if(display == "none"){
+                    $(this).css("color", "#0082ff");
+                    $(this).css("font-weight", "800");
+                }
+                else if(display == "block"){
+                    $(this).css("color", "#646464");
+                    $(this).css("font-weight", "400");
+                }
+
+                $('div#dropDownContent').slideToggle();
+            }
+
+            // jQuery : ajax
+            function getAnalyze(){
+                $.ajax({
+                    url:"/Capstone/Demo",
+                    success:function(result){
+                        // textarea 입력 텍스트 받아와서, div 태그에 삽입.
+                        sentiStr = $('textarea#getAnalyze_input').val();
+                        $('textarea#getAnalyze_input').val("");
+                        $('div#getAnalyze_text').val("");
+                    }
+                });
+            }
+        </SCRIPT>
+    </HEAD>
+
+    <BODY>
+        <div class="wrapper">
+            <header class="top">
+                <section class="top_titleS">
+                    <div>
+                        <div><a href="/Capstone/MainPage">로고 이미지(Ho) _ TAG</a></div>
+                    </div>
+                </section>
+                <nav class="top_listS">
+                    <div>
+                        <ul>
+                            <li><a class="mainA" href="/Capstone/Intro">소개</a></li>
+                            <li><a class="mainA" href="/Capstone/Demo">데모</a></li>
+                            <li>
+                                <div class="dropDown">
+                                    <a id="dropDownBtn" class="mainA">
+                                        사람들                                
+                                    </a>
+
+                                    <div id="dropDownContent" class="dropDownBox">
+                                        <a>문재인</a>
+                                        <a>홍준표</a>
+                                        <a>안철수</a>
+                                        <a>유승민</a>
+                                        <a>심상정</a>
+                                    </div>    
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+            
+            <section class="mid">
+                <section class="mid_secS">
+                    <article>
+
+                        <div class="mid_div">
+                            <!-- 상단 타이틀 영역  -->
+                            <div class="mid_titleArea">
+                                <h1>Please Enter any Reviews</h1>
+                            </div>
+                            
+                            <!-- 이미지와 텍스트 입력 영역  -->
+                            <div class="mid_inputArea">
+                                <div>
+                                    <!-- 이미지 영역 -->
+                                    <div class="mid_inputArea_Image">
+                                        <a href="/Capstone/Demo">
+                                            <img src="{% static 'Image/Cat.png' %}">
+                                        </a>
+                                    </div>
+
+                                    <span class="gapSpan"></span>
+
+                                    <!-- 텍스트 입력 영역 -->
+                                    <div class="mid_inputArea_Input">
+                                        <textarea id="getAnalyze_input" name="reviewArea" maxlength="140" placeholder="문장을 입력해주세요." cols="3" rows="50" autofocus></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 버튼 클릭 영역  -->
+                            <div class="mid_buttonArea">
+                                <button id="getAnalyze_button">분석</button>
+                            </div>
+                            
+                            <!-- 예측 결과 영역 --> 
+                            <div class="mid_predictArea">
+                                <!-- 예측 결과에 사용된 텍스트 -->
+                                <div class="predictText">
+                                    <div>
+                                        <div id="getAnalyze_text">
+                                            예측 결과에 사용 텍스트
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 예측 결과 -->
+                                <div class="predictResult">
+                                    <div>
+                                        <div id="getAnalyze_result">
+                                            분석결과
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    
+                </section>
+            </section>
+
+            <footer class="bot">
+                bottom
+            </footer>
+        </div>
+    </BODY>
+</HTML>

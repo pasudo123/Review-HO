@@ -2,4 +2,9 @@ from django.shortcuts import render
 
 def show_main(request):
     return render(request, 'pages/MainPage.html', {})
-# Create your views here.
+
+def show_intro(request):
+    return render(request, 'pages/Intro.html', {})
+
+def show_demo(request):
+    return render(request, 'pages/Demo.html', {})

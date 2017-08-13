@@ -1,0 +1,197 @@
+
+@font-face { 
+    font-family:'NanumBarunGothic'; 
+    src:"Fonts/NanumBarunGothic.ttf" format('truetype'); 
+}
+
+@font-face { 
+    font-family:'NanumSquareR'; 
+    src:"Fonts/NanumSquareR.ttf" format('truetype'); 
+}
+
+section.mid{   
+    background-color:#f4f4f4;
+}
+
+section.mid_secS{
+    margin:0 auto;
+    width:80%;
+    height:100%;
+}
+
+section.mid_secS > article{
+    position: relative;
+    top:6%;
+    height:88%;
+    /*남은공간 : 6% */
+    background-color: #f4f4f4;
+}
+
+/* DEMO에서 상세 테스트 부분*/
+div.mid_div{
+    width:100%;
+    height:100%;
+}
+
+/* article 제목 부분 */
+div.mid_titleArea{
+    width:100%;
+    height:10%;
+    text-align: center;
+    display:table;
+    /* border:1px solid blue; */
+}
+
+div.mid_titleArea h1{
+    display:table-cell;
+    vertical-align: middle;
+    font-size: 2.4vw; 
+    font-family: NanumSquareR;
+    font-weight: 700;
+}
+
+/* article 입력 부분 */
+div.mid_inputArea{
+    margin-top:6%;
+    width:100%;
+    display:table;
+    text-align: center;
+    /* border:1px solid blue; */
+}
+
+div.mid_inputArea > div{
+    width:100%;
+    height:50%;
+    display:table-cell;
+    vertical-align: middle;
+    display:flex;
+    flex-direction: row;
+}
+
+span.gapSpan{
+    width:5%;
+}
+
+/* article 입력 부분 *//* 고양이 이미지 */
+div.mid_inputArea_Image{
+    margin-left:10%;    /* 왼쪽 공백 */
+    width:10%;
+    height:10%;
+    background-color:white;
+    border-radius: 10px;
+    padding-top:0.3vw;
+    padding-left:0.2vw;
+    border:0.1vw solid #d3d3d3;
+}
+
+div.mid_inputArea_Image:hover{
+    border:0.1vw solid #b2d3d1;
+}
+
+div.mid_inputArea_Image > a > img{
+    margin:0 auto;
+    width:100%;
+    height:auto;
+}
+
+/* article 입력 부분 *//* 텍스트 입력 영역 */
+div.mid_inputArea_Input{
+    margin-right:10%;   /* 오른쪽 공백 */
+    width:100%;
+}
+
+div.mid_inputArea_Input textarea{
+    width:36vw;
+    height:4vw;
+    text-align: left;
+    resize: none;
+    font-size:1.2vw;
+    font-family:NanumSquareR;
+}
+
+/* article 입력 부분 */ /* 버튼 클릭 영역 */
+div.mid_buttonArea{
+    margin-left:10%;
+    margin-right:10.6%;
+    text-align: right;
+}
+
+div.mid_buttonArea button{
+    width:4vw;
+    height:2vw;
+    font-family: NanumSquareR;
+    color:white;
+    background-color:#0070c0;
+}
+
+div.mid_buttonArea button:hover{
+    background-color:#0061a7;
+    cursor:pointer;
+}
+
+/* article 입력 부분 */ /* 예측 결과 영역 */
+div.mid_predictArea{
+    margin-top:5%;
+    margin-left:10%;
+    margin-right:10.6%;
+    height:18%;
+}
+
+/* article 입력 부분 */ /* 예측 결과 영역 */ /* 예측 결과에 사용된 텍스트 */
+div.mid_predictArea > div.predictText{
+    width:100%;
+    height:50%;
+    color:black;
+    background-color: white;
+    border-top-right-radius:15px;
+    border-top-left-radius:15px;
+    border:1.5px solid lightgrey;
+}
+
+div.mid_predictArea > div.predictText > div{
+    margin:0 auto;
+    width:90%;
+    height:100%;
+    display:table;
+    text-align:center;
+}
+
+div.mid_predictArea > div.predictText > div > div{
+    width:100%;
+    height:100%;
+    color:#6b6b6b;
+    display:table-cell;
+    vertical-align: middle;
+    font-size:1.1vw;
+    font-family: NanumSquareR;
+}
+
+
+/* article 입력 부분 */ /* 예측 결과 영역 */ /* 예측 결과 */
+div.mid_predictArea > div.predictResult{
+    width:100%;
+    height:50%;
+    color:black;
+    background-color: #f4f4f4;
+    border-bottom-right-radius:15px;
+    border-bottom-left-radius:15px;
+    border:1.5px solid lightgrey;
+    border-top: transparent;
+}
+
+div.mid_predictArea > div.predictResult > div{
+    margin:0 auto;
+    width:90%;
+    height:100%;
+    display:table;
+    text-align:center;
+}
+
+div.mid_predictArea > div.predictResult > div > div{
+    width:100%;
+    height:100%;
+    display:table-cell;
+    vertical-align: middle;
+    font-size:1.1vw;
+    font-family: NanumSquareR;
+}
