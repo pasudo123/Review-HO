@@ -19,6 +19,7 @@ from django.contrib import admin
 urlpatterns = [
     # http://127.0.0.1:8000/Capstone/MainPage
     # url 로 접근해야 한다.
+    
     url(r'^Capstone/', include('pages.urls')),
     url(r'^admin/', admin.site.urls),
 ]

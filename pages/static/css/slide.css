@@ -1,0 +1,163 @@
+@font-face { 
+    font-family:'NanumBarunGothic'; 
+    src:"Fonts/NanumBarunGothic.ttf" format('truetype'); 
+}
+
+@font-face { 
+    font-family:'NanumSquareR'; 
+    src:"Fonts/NanumSquareR.ttf" format('truetype'); 
+}
+
+div.slideWrap{
+    width:100%;
+    height:100%;
+}
+
+/* box office 상단 */
+div.inner_top{
+    width:100%;
+    height:50%;
+    display: flex;
+    flex-direction: row;
+    border-top:1px solid black; 
+}
+
+/* box office 하단 */
+div.inner_bot{
+    width:100%;
+    height:50%;
+    border-bottom:1px solid black; 
+    background: black;
+    /* background:lightpink; */
+}
+
+
+/*** box office 상단 ***/
+/* 영화 포스터적인 측면 */
+div.inner_top > div.moviePoster{
+    height: 100%;
+    flex-basis:30%;
+}
+
+div.inner_top > div.moviePoster > div{
+    margin:0 auto;
+    width:90%;
+    height:100%;
+    display:table;
+}
+
+div.inner_top > div.moviePoster > div > div{
+    display:table-cell;
+    vertical-align: middle;
+}
+
+div.inner_top > div.moviePoster > div > div > div.poster{
+    margin:0 auto;
+    width:80%;
+    height:80%;
+    /* background-image:url('../Image/movie_image.jpg'); */
+    background-size:cover;
+    /* border:1px solid black; */
+}
+
+/* 영화 내용적인 측면 */
+div.inner_top > div.movieContent{
+    height: 100%;
+    flex-basis:80%;
+    /* background: lightgray; */
+}
+
+div.inner_top > div.movieContent > div{
+    width:100%;
+    height:20%;
+    padding-left:5%;
+    text-align: left;
+    display:table;
+    vertical-align: middle;
+    /* background:lightcyan; */
+}
+
+div.inner_top > div.movieContent > div > div.movieTitle{
+    display:table-cell;
+    vertical-align: middle;
+    font-size: 2.2vw; 
+}
+
+/*** box office 상단 ***/
+
+/* box office 하단 */
+/* 영화 리뷰내용 측면 */
+nav.top_menu{
+    width:100%;
+    height:50px;
+    background: #2d2d2d;
+}
+
+nav.top_menu ul{
+    margin:0;
+    padding:0;
+}
+
+nav.top_menu ul li{
+    list-style: none;
+    color: white;
+    float: left;
+    line-height:50px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+nav.top_menu li.menu_li{
+    text-decoration:none;
+    color: white;
+    width:25%;
+    font-family: "Trebuchet MS", Dotum, Arial;
+}
+
+nav.top_menu li.menu_li:hover{
+    color: red;
+    cursor: pointer;
+    background-color: #4d4d4d;
+}
+/* box office 하단 */
+/* 영화 리뷰내용 측면 */
+
+div.rNp_List{
+    background: #2d2d2d;
+    width:100%;
+    height:80%;
+    padding-top:1%;
+    margin-bottom:1%;
+}
+
+div.reviewList{
+    text-align: left;
+    text-indent:3%;
+    line-height:45px;
+}
+
+div.reviewList img{
+    width:3%;
+    height:auto;
+    padding-bottom:0.4%;
+}
+
+span.reviewText{
+    padding-left:2%;
+    cursor:auto;
+}
+
+div.reviewList_ele{
+    font-family:'NanumSquareR'; 
+    font-size:1.7vw;
+    color:rgb(221, 221, 221);
+    vertical-align:middle;
+}
+
+span.pageList{
+    width:100%;
+    position: absolute;
+    bottom:0;
+    left: 0;
+    margin-bottom:10px;
+}

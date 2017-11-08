@@ -1,0 +1,85 @@
+
+@font-face { 
+    font-family:'NanumBarunGothic'; 
+    src:"Fonts/NanumBarunGothic.ttf" format('truetype'); 
+}
+
+@font-face { 
+    font-family:'NanumSquareR'; 
+    src:"Fonts/NanumSquareR.ttf" format('truetype'); 
+}
+
+section.mid{   
+    border:1px solid lightgray;
+
+    /* background gradient : https://www.cssmatic.com/gradient-generator#'\-moz\-linear\-gradient\%28top\%2C\%20rgba\%2861\%2C61\%2C61\%2C1\%29\%200\%25\%2C\%20rgba\%2854\%2C54\%2C54\%2C1\%29\%2025\%25\%2C\%20rgba\%2848\%2C48\%2C48\%2C1\%29\%2050\%25\%2C\%20rgba\%2831\%2C31\%2C31\%2C1\%29\%2075\%25\%2C\%20rgba\%280\%2C0\%2C0\%2C1\%29\%20100\%25\%29\%3B' */
+    background: rgba(61,61,61,1);
+    background: -moz-linear-gradient(top, rgba(61,61,61,1) 0%, rgba(54,54,54,1) 25%, rgba(48,48,48,1) 50%, rgba(31,31,31,1) 75%, rgba(0,0,0,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(61,61,61,1)), color-stop(25%, rgba(54,54,54,1)), color-stop(50%, rgba(48,48,48,1)), color-stop(75%, rgba(31,31,31,1)), color-stop(100%, rgba(0,0,0,1)));
+    background: -webkit-linear-gradient(top, rgba(61,61,61,1) 0%, rgba(54,54,54,1) 25%, rgba(48,48,48,1) 50%, rgba(31,31,31,1) 75%, rgba(0,0,0,1) 100%);
+    background: -o-linear-gradient(top, rgba(61,61,61,1) 0%, rgba(54,54,54,1) 25%, rgba(48,48,48,1) 50%, rgba(31,31,31,1) 75%, rgba(0,0,0,1) 100%);
+    background: -ms-linear-gradient(top, rgba(61,61,61,1) 0%, rgba(54,54,54,1) 25%, rgba(48,48,48,1) 50%, rgba(31,31,31,1) 75%, rgba(0,0,0,1) 100%);
+    background: linear-gradient(to bottom, rgba(61,61,61,1) 0%, rgba(54,54,54,1) 25%, rgba(48,48,48,1) 50%, rgba(31,31,31,1) 75%, rgba(0,0,0,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3d3d3d', endColorstr='#000000', GradientType=0 );
+    /**/
+}
+
+section.mid_secS{
+    margin:0 auto;
+    width:95%;
+    height:100%;
+}
+
+section.mid_secS > article{
+    position: relative;
+    top:3%;
+    height:94%;
+    /*bottom 남은공간 : 3% */
+    background-color: #f4f4f4;
+}
+
+
+div.slider_top{
+    background: white;
+    border-top:1px solid black;
+    border-right:1px solid black;
+    border-left:1px solid black;
+    width:100%;
+    height:12%;
+    display:table;
+    text-align: center;
+}
+
+div.slider_top > span{
+    display:table-cell;
+    vertical-align: middle;
+    color:white;
+    font-size: 2vw; 
+    font-family: NanumBarunGothic;
+    letter-spacing:1px;
+    word-spacing:5px;
+}
+
+/*- 메인 상단 로고 */
+img.guide_Logo{
+    margin-top:1%;
+    width:38%;
+    height:auto;
+    /* border:1px solid red; */
+}
+
+div.slider_main{
+    background:white;
+    border-right:1px solid black;
+    border-left:1px solid black;
+    border-bottom:1px solid black;
+    width:100%;
+    height:88%;
+    display: table;
+}
+
+div.slider_main > iframe{
+    width:100%;
+    height:100%;
+    
+}

@@ -3,39 +3,60 @@
 <HTML>
     <HEAD>
         <meta charset="UTF-8">
-        <TITLE>POLICTICS MAIN PAGE</TITLE> 
         <link rel="stylesheet" type="text/css" href="{% static 'css/Demo.css' %}"/>
         <link rel="stylesheet" href="{% static 'css/MainPage.css' %}"/>
         <SCRIPT type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></SCRIPT>
         <SCRIPT>
-        	$(document).ready(function(){
-                $('a#dropDownBtn').on("click", dropDownFunc);
+            $(document).ready(function(){
                 $('button#getAnalyze_button').on("click", getAnalyze);
-        	});
-
-            function dropDownFunc(){
-                var display = $('div#dropDownContent').css("display");
-                if(display == "none"){
-                    $(this).css("color", "#0082ff");
-                    $(this).css("font-weight", "800");
-                }
-                else if(display == "block"){
-                    $(this).css("color", "#646464");
-                    $(this).css("font-weight", "400");
-                }
-
-                $('div#dropDownContent').slideToggle();
-            }
+                $('textarea#getAnalyze_input').on("keydown", function(key){
+                    if(key.keyCode == 13){
+                        getAnalyze();
+                    }
+                });
+            });
 
             // jQuery : ajax
             function getAnalyze(){
+                // textarea 입력 텍스트 받아와서, div 태그에 삽입.
+                sentiStr = $('textarea#getAnalyze_input').val();
+                $('textarea#getAnalyze_input').val("");
+
+                // blank >> return
+                if(sentiStr == "")
+                    return;
+                    
                 $.ajax({
-                    url:"/Capstone/Demo",
-                    success:function(result){
-                        // textarea 입력 텍스트 받아와서, div 태그에 삽입.
-                        sentiStr = $('textarea#getAnalyze_input').val();
+                    url:'/Capstone/Demo/analyze/',
+                    data:{
+                        'text':sentiStr
+                    },
+                    dataType:'JSON',
+                    beforeSend:function(){
+                        $('img#loadCircle').fadeToggle();
+                    },
+                    success:function(data){
+                        $('img#loadCircle').fadeToggle();
                         $('textarea#getAnalyze_input').val("");
-                        $('div#getAnalyze_text').val("");
+                        
+                        // 긍정
+                        if(data.result == 1){
+                            $('div#getAnalyze_result').text("POSITIVE");
+                            $('div#getAnalyze_result').css({
+                                'color':'green',
+                                'font-weight':'700'
+                            });
+                        }
+                        // 부정
+                        else if(data.result == 0){
+                            $('div#getAnalyze_result').text("NEGATIVE");
+                            $('div#getAnalyze_result').css({
+                                'color':'red',
+                                'font-weight':'700'
+                            });
+                        }
+
+                        $('div#getAnalyze_text').text(sentiStr);
                     }
                 });
             }
@@ -47,7 +68,7 @@
             <header class="top">
                 <section class="top_titleS">
                     <div>
-                        <div><a href="/Capstone/MainPage">로고 이미지(Ho) _ TAG</a></div>
+                        <div><a href="/Capstone/MainPage"><img class="mainLogo" src="{% static 'Image/Ho.png' %}" /></a></div>
                     </div>
                 </section>
                 <nav class="top_listS">
@@ -55,21 +76,7 @@
                         <ul>
                             <li><a class="mainA" href="/Capstone/Intro">소개</a></li>
                             <li><a class="mainA" href="/Capstone/Demo">데모</a></li>
-                            <li>
-                                <div class="dropDown">
-                                    <a id="dropDownBtn" class="mainA">
-                                        사람들                                
-                                    </a>
-
-                                    <div id="dropDownContent" class="dropDownBox">
-                                        <a>문재인</a>
-                                        <a>홍준표</a>
-                                        <a>안철수</a>
-                                        <a>유승민</a>
-                                        <a>심상정</a>
-                                    </div>    
-                                </div>
-                            </li>
+                            <li><a class="mainA" href="/Capstone/MovieGuide">영화안내</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -78,11 +85,10 @@
             <section class="mid">
                 <section class="mid_secS">
                     <article>
-
                         <div class="mid_div">
                             <!-- 상단 타이틀 영역  -->
                             <div class="mid_titleArea">
-                                <h1>Please Enter any Reviews</h1>
+                                <img src="{% static 'Image/DEMO_text.png' %}">
                             </div>
                             
                             <!-- 이미지와 텍스트 입력 영역  -->
@@ -110,9 +116,10 @@
                             </div>
                             
                             <!-- 예측 결과 영역 --> 
-                            <div class="mid_predictArea">
+                            <div class="mid_predictArea">         
                                 <!-- 예측 결과에 사용된 텍스트 -->
                                 <div class="predictText">
+                                    <img id="loadCircle" class="loadCircle" src="{% static 'Image/loadingCircle.gif' %}"/>
                                     <div>
                                         <div id="getAnalyze_text">
                                             예측 결과에 사용 텍스트
@@ -131,7 +138,6 @@
                             </div>
                         </div>
                     </article>
-                    
                 </section>
             </section>
 

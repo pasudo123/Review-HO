@@ -1,0 +1,497 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <!-- jQuery Link -->
+    <SCRIPT type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></SCRIPT>
+    <SCRIPT type="text/javascript" src="{% static 'js/jquery.pagenavigator.js' %}"></SCRIPT>
+    <SCRIPT type="text/javascript" src="{% static 'js/publicScript.js' %}"></SCRIPT>
+    
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="{% static 'css/swiper.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slide.css' %}">
+    <!-- Demo styles -->
+    <style>
+        html, body {
+            position: relative;
+            height: 100%;
+        }
+        body {
+            background: #eee;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color:#000;
+            margin: 0;
+            padding: 0;
+        }
+        .swiper-container {
+            width: 100%;
+            height: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+    </style>
+
+    <!-- 포스터 이미지 불러오기 -->
+    <SCRIPT>
+        $(document).ready(function(){
+            jQuery('#document_navi3').jaPageNavigator({
+                page_row : "10"         // 보여질 게시물 목록 수
+                ,page_link : "10"       // 보여질 페이지 링크 수
+                ,total_count : "500"    // 게시물 총 수
+            });
+
+            setPoster();
+        });
+
+        function setPoster(){
+            $.ajax({
+                url:'/Capstone/MovieGuide/MovieInfo/',
+
+                success:function(data){
+                    var movie_obj = jQuery.parseJSON(data);
+
+                    for(var i = 1; i <= 10; i++){
+                        var code = movie_obj[i.toString()]["code"];
+                        var title = movie_obj[i.toString()]["title"];
+                        var ranking = movie_obj[i.toString()]["ranking"];
+                        var posturl = movie_obj[i.toString()]["posterUrl"];
+                        
+                        // 포스터 설정 및 제목 지정
+                        $('div#slide_' + i.toString()).find('div.poster').css("background-image", "url('" + posturl +"')");
+                        $('div#slide_' + i.toString()).find('div.poster').css("border", "1px solid black");
+                        $('div#slide_' + i.toString()).find('div.movieTitle').text(title);
+                        
+                        // 해당 영화에 대한 리뷰 내용, 문장 분류하고 입히기.
+                    }
+                }
+            });
+        }
+    </SCRIPT>
+</head>
+<body>
+    <!-- Swiper -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+
+            <!-- 박스오피스 1위 -->
+            <div id="slide_1" class="swiper-slide">
+                <div class="slideWrap">
+                    <div class="inner_top">
+                        <div class="moviePoster">
+                            <div>
+                                <div>
+                                    <div id="slide_1_poster" class="poster">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="movieContent">
+                            <div>
+                                <div class="movieTitle">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="inner_bot">
+                        <nav class="top_menu">
+                            <ul>
+                                <li class="menu_li" id="special_Review_1_btn" onclick="findSpecial(1)">Special</li>
+                                <li class="menu_li" id="story_Review_1_btn" onclick="findStory(1)">Story</li>
+                                <li class="menu_li" id="sound_Review_1_btn" onclick="findSound(1)">Sound</li>
+                                <li class="menu_li" id="act_Review_1_btn" onclick="findAct(1)">Act</li>
+                            </ul>
+                        </nav>
+                        
+                        <div id="rNp_1" class="rNp_List">
+                            <div class="reviewList">
+                                <!-- <div class="reviewList_ele">
+                                    <img class="reviewSenti" src="{% static 'Image/posIcon.png' %}"></img><span class="reviewText">리뷰 글 리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰</span>
+                                </div> -->
+                                <!-- <div class="toolTip">
+                                    툴팁
+                                </div> -->
+                            </div>
+
+                            <span class="pageList">
+                                <div>
+                                    <ul class="pagination pagination-sm" id="document_navi3">
+                                        <li class="prev"><a href="#">&laquo;</a></li>
+                                        
+                                        <!-- 이전페이지 없는 경우 숨김 태그 -->
+                                        <li class="disabled prevx"><a href="#">&laquo;</a></li>
+                                        <span class="pageaction"></span>
+                                        
+                                        <li class="num"><a href="#">{page}</a></li>
+
+                                        <li class="active now"><a href="#">{page} <span class="sr-only">(current)</span></a></li>
+                                        <li class="next"><a href="#">&raquo;</a></li>
+                                        
+                                        <!-- 다음페이지 없는 경우 숨김 태그 -->
+                                        <li class="disabled nextx"><a href="#">&raquo;</a></li>
+                                    </ul>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 박스오피스 2위 -->
+            <div id="slide_2" class="swiper-slide">
+                <div class="slideWrap">
+                    <div class="inner_top">
+                        <div class="moviePoster">
+                            <div>
+                                <div>
+                                    <div id="slide_2_poster" class="poster">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="movieContent">
+                            <div>
+                                <div class="movieTitle">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="inner_bot">
+                        <nav class="top_menu">
+                            <ul>
+                                <li class="menu_li" id="special_Review_2_btn">Special</li>
+                                <li class="menu_li" id="story_Review_2_btn">Story</li>
+                                <li class="menu_li" id="sound_Review_2_btn">Sound</li>
+                                <li class="menu_li" id="act_Review_2_btn">Act</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <div id="slide_3" class="swiper-slide">
+                <div class="slideWrap">
+                    <div class="inner_top">
+                        <div class="moviePoster">
+                            <div>
+                                <div>
+                                    <div id="slide_3_poster" class="poster">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="movieContent">
+                            <div>
+                                <div class="movieTitle">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="inner_bot">
+                        <nav class="top_menu">
+                            <ul>
+                                <li class="menu_li">Story</li>
+                                <li class="menu_li">Sound</li>
+                                <li class="menu_li">Act</li>
+                                <li class="menu_li">Special</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <div id="slide_4" class="swiper-slide">
+                <div class="slideWrap">
+                    <div class="inner_top">
+                        <div class="moviePoster">
+                            <div>
+                                <div>
+                                    <div id="slide_4_poster" class="poster">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="movieContent">
+                            <div>
+                                <div class="movieTitle">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="inner_bot">
+                        <nav class="top_menu">
+                            <ul>
+                                <li class="menu_li">Story</li>
+                                <li class="menu_li">Sound</li>
+                                <li class="menu_li">Act</li>
+                                <li class="menu_li">Special</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <div id="slide_5" class="swiper-slide">
+                <div class="slideWrap">
+                    <div class="inner_top">
+                        <div class="moviePoster">
+                            <div>
+                                <div>
+                                    <div id="slide_5_poster" class="poster">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="movieContent">
+                            <div>
+                                <div class="movieTitle">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="inner_bot">
+                        <nav class="top_menu">
+                            <ul>
+                                <li class="menu_li">Story</li>
+                                <li class="menu_li">Sound</li>
+                                <li class="menu_li">Act</li>
+                                <li class="menu_li">Special</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <div id="slide_6" class="swiper-slide">
+                <div class="slideWrap">
+                    <div class="inner_top">
+                        <div class="moviePoster">
+                            <div>
+                                <div>
+                                    <div id="slide_6_poster" class="poster">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="movieContent">
+                            <div>
+                                <div class="movieTitle">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="inner_bot">
+                        <nav class="top_menu">
+                            <ul>
+                                <li class="menu_li">Story</li>
+                                <li class="menu_li">Sound</li>
+                                <li class="menu_li">Act</li>
+                                <li class="menu_li">Special</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <div id="slide_7" class="swiper-slide">
+                <div class="slideWrap">
+                    <div class="inner_top">
+                        <div class="moviePoster">
+                            <div>
+                                <div>
+                                    <div id="slide_7_poster" class="poster">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="movieContent">
+                            <div>
+                                <div class="movieTitle">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="inner_bot">
+                        <nav class="top_menu">
+                            <ul>
+                                <li class="menu_li">Story</li>
+                                <li class="menu_li">Sound</li>
+                                <li class="menu_li">Act</li>
+                                <li class="menu_li">Special</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <div id="slide_8" class="swiper-slide">
+                <div class="slideWrap">
+                    <div class="inner_top">
+                        <div class="moviePoster">
+                            <div>
+                                <div>
+                                    <div id="slide_8_poster" class="poster">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="movieContent">
+                            <div>
+                                <div class="movieTitle">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="inner_bot">
+                        <nav class="top_menu">
+                            <ul>
+                                <li class="menu_li">Story</li>
+                                <li class="menu_li">Sound</li>
+                                <li class="menu_li">Act</li>
+                                <li class="menu_li">Special</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <div id="slide_9" class="swiper-slide">
+                <div class="slideWrap">
+                    <div class="inner_top">
+                        <div class="moviePoster">
+                            <div>
+                                <div>
+                                    <div id="slide_9_poster" class="poster">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="movieContent">
+                            <div>
+                                <div class="movieTitle">
+                                    슬라이드 9
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="inner_bot">
+                        <nav class="top_menu">
+                            <ul>
+                                <li class="menu_li">Story</li>
+                                <li class="menu_li">Sound</li>
+                                <li class="menu_li">Act</li>
+                                <li class="menu_li">Special</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="slide_10" class="swiper-slide">
+                <div class="slideWrap">
+                    <div class="inner_top">
+                        <div class="moviePoster">
+                            <div>
+                                <div>
+                                    <div id="slide_10_poster" class="poster">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="movieContent">
+                            <div>
+                                <div class="movieTitle">
+                                    슬라이드 10
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="inner_bot">
+                        <nav class="top_menu">
+                            <ul>
+                                <li class="menu_li">Story</li>
+                                <li class="menu_li">Sound</li>
+                                <li class="menu_li">Act</li>
+                                <li class="menu_li">Special</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- Swiper JS -->
+    <script src="{% static 'js/swiper.min.js' %}"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        direction: 'vertical',
+        slidesPerView: 1,
+        paginationClickable: true,
+        spaceBetween: 30,
+        mousewheelControl: true
+    });
+    </script>
+</body>
+</html>

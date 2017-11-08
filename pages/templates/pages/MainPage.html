@@ -3,27 +3,14 @@
 <HTML>
     <HEAD>
         <meta charset="UTF-8">
-        <TITLE>MAIN PAGE</TITLE> 
         <link rel="stylesheet" href="{% static 'css/MainPage.css' %}"/>
         <SCRIPT type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></SCRIPT>
-        <SCRIPT>
-        	$(document).ready(function(){
-                $('a#dropDownBtn').on("click", dropDownFunc);
-        	});
-
-            function dropDownFunc(){
-                var display = $('div#dropDownContent').css("display");
-                if(display == "none"){
-                    $(this).css("color", "#0082ff");
-                    $(this).css("font-weight", "800");
-                }
-                else if(display == "block"){
-                    $(this).css("color", "#646464");
-                    $(this).css("font-weight", "400");
-                }
-
-                $('div#dropDownContent').slideToggle();
-            }
+        <SCRIPT type="text/javascript" src="{% static 'js/publicScript.js' %}"></SCRIPT>
+        
+        <SCRIPT>        
+            $(document).ready(function(){
+                // ready();
+            });
         </SCRIPT>
     </HEAD>
 
@@ -32,29 +19,15 @@
             <header class="top">
                 <section class="top_titleS">
                     <div>
-                        <div><a href="/Capstone/MainPage">로고 이미지(Ho) _ TAG</a></div>
+                        <div><a href="/Capstone/MainPage"><img class="mainLogo" src="{% static 'Image/Ho.png' %}" /></a></div>
                     </div>
                 </section>
                 <nav class="top_listS">
                     <div>
                         <ul>
                             <li><a class="mainA" href="/Capstone/Intro">소개</a></li>
-                            <li><a class="mainA" href="/Capstone/Demo">데모</a></li>
-                            <li>
-                                <div class="dropDown">
-                                    <a id="dropDownBtn" class="mainA">
-                                        사람들                                
-                                    </a>
-
-                                    <div id="dropDownContent" class="dropDownBox">
-                                        <a>문재인</a>
-                                        <a>홍준표</a>
-                                        <a>안철수</a>
-                                        <a>유승민</a>
-                                        <a>심상정</a>
-                                    </div>    
-                                </div>
-                            </li>
+                            <li><a class="mainA" href="/Capstone/Demo">데모</a></li>   
+                            <li><a class="mainA" href="/Capstone/MovieGuide">영화안내</a></li>
                         </ul>
                     </div>
                 </nav>
