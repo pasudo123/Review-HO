@@ -4,6 +4,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
+    
+    <!--+++++++++++++++++++++++ Page Navigation Link +++++++++++++++++++++++-->
+    
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    
+    <!--Import jquery.css--> 
+    <!-- jquery link 는 존재하고 있어서 생략 -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    
+    <!--Import materialize.js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+
+    <!--Import pagination.js this is the plugin-->
+    <script type="text/javascript" src="{% static 'js/pagination.js' %}"></script>
+
+    <!--+++++++++++++++++++++++ Page Navigation Link +++++++++++++++++++++++-->
+
     <!-- jQuery Link -->
     <SCRIPT type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></SCRIPT>
     <SCRIPT type="text/javascript" src="{% static 'js/publicScript.js' %}"></SCRIPT>
@@ -126,15 +147,16 @@
                             </ul>
                         </nav>
                         
+                        <!-- https://www.jqueryscript.net/table/jQuery-Table-Pagination-For-Materialize.html -->
                         <div id="rNp_1" class="rNp_List">
-                            <div class="reviewList">
-                            </div>
-
-                            <span class="pageList">
-                                <div>
-                                    <ul id="pagination-demo" class="pagination-sm"></ul>
-                                </div>
-                            </span>
+                            <!-- <div class="reviewList"> -->
+                            <table id="myTable_1" class="reviewTable">
+                                <!-- <tr><td><div><img></img><span>1</span></div></td></tr>
+                                <tr><td><div><img></img><span>2</span></div></td></tr>
+                                <tr><td><div><img></img><span>3</span></div></td></tr>
+                                <tr><td><div><img></img><span>4</span></div></td></tr> -->
+                            </table>
+                            <!-- </div> -->
                         </div>
                     </div>
                 </div>

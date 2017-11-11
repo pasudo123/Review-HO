@@ -9,23 +9,12 @@ function findStory(n){
         dataType:'json',
         success:function(args){
             var len = Object.keys(args).length;
-            alert(len);
+            // alert(len);
 
             tc = 12;
             // var tc = len / 5;
             if(len % 5 != 0)
                 tc = tc + 1;
-            
-            $('#pagination-demo').twbsPagination({
-                totalPages: 16,
-                visiblePages: 6,
-                next: 'Next',
-                prev: 'Prev',
-                onPageClick: function (event, page) {
-                    //fetch content and render here
-                    $('#page-content').text('Page ' + page) + ' content here';
-                }
-            });
 
             // 댓글 모음
             for(var i = 1; i <= len; i++){
@@ -33,8 +22,8 @@ function findStory(n){
                 var s = args[i]['senti'];
 
                 // 해당 영화 리뷰 목록 접근
-                var list = $('div#rNp_'+ number).find('div.reviewList');
-                var ele = '<div class="reviewList_ele">';
+                var list = $('div#rNp_'+ number).find('table#myTable_' + number);
+                var ele = '<tr><td><div class="reviewList_ele">';
 
                 // 부정 리뷰
                 if(s == 0){
@@ -50,9 +39,22 @@ function findStory(n){
                 if(t.length >= 70)
                     skipText = t.substring(0, 70) + " ...";
 
-                ele += '<span class="reviewText">' + skipText + '</span></div>';
+                ele += '<span class="reviewText">' + skipText + '</span></div></td></tr>';
                 
                 list.append(ele);
+
+                $('table.reviewTable').find('div.reviewList_ele').css('font-family', 'NanumSquareR');
+                $('table.reviewTable').find('div.reviewList_ele').css('font-size', '1.7vw');
+                $('table.reviewTable').find('div.reviewList_ele').css('color', 'rgb(221, 221, 221)');
+                $('table.reviewTable').find('div.reviewList_ele').css('vertical-align', 'middle');
+
+                $('table.reviewTable').find('img').css('width', '3%');
+                $('table.reviewTable').find('img').css('height', 'auto');
+                $('table.reviewTable').find('img').css('padding-bottom', '0.4%');
+                $('table.reviewTable').find('img').css('height', 'auto');
+
+                $('table.reviewTable').find('span').css('padding-left', '2%');
+                $('table.reviewTable').find('span').css('cursor', 'auto');
 
                 // 다섯개씩 끊어서 목록 갱신
                 if(i % 5 == 0)
