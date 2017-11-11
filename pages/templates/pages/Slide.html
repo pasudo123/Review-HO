@@ -6,7 +6,6 @@
 
     <!-- jQuery Link -->
     <SCRIPT type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></SCRIPT>
-    <SCRIPT type="text/javascript" src="{% static 'js/jquery.pagenavigator.js' %}"></SCRIPT>
     <SCRIPT type="text/javascript" src="{% static 'js/publicScript.js' %}"></SCRIPT>
     
     <!-- Latest compiled and minified CSS -->
@@ -62,12 +61,6 @@
     <!-- 포스터 이미지 불러오기 -->
     <SCRIPT>
         $(document).ready(function(){
-            jQuery('#document_navi3').jaPageNavigator({
-                page_row : "10"         // 보여질 게시물 목록 수
-                ,page_link : "10"       // 보여질 페이지 링크 수
-                ,total_count : "500"    // 게시물 총 수
-            });
-
             setPoster();
         });
 
@@ -135,31 +128,11 @@
                         
                         <div id="rNp_1" class="rNp_List">
                             <div class="reviewList">
-                                <!-- <div class="reviewList_ele">
-                                    <img class="reviewSenti" src="{% static 'Image/posIcon.png' %}"></img><span class="reviewText">리뷰 글 리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰 글리뷰</span>
-                                </div> -->
-                                <!-- <div class="toolTip">
-                                    툴팁
-                                </div> -->
                             </div>
 
                             <span class="pageList">
                                 <div>
-                                    <ul class="pagination pagination-sm" id="document_navi3">
-                                        <li class="prev"><a href="#">&laquo;</a></li>
-                                        
-                                        <!-- 이전페이지 없는 경우 숨김 태그 -->
-                                        <li class="disabled prevx"><a href="#">&laquo;</a></li>
-                                        <span class="pageaction"></span>
-                                        
-                                        <li class="num"><a href="#">{page}</a></li>
-
-                                        <li class="active now"><a href="#">{page} <span class="sr-only">(current)</span></a></li>
-                                        <li class="next"><a href="#">&raquo;</a></li>
-                                        
-                                        <!-- 다음페이지 없는 경우 숨김 태그 -->
-                                        <li class="disabled nextx"><a href="#">&raquo;</a></li>
-                                    </ul>
+                                    <ul id="pagination-demo" class="pagination-sm"></ul>
                                 </div>
                             </span>
                         </div>

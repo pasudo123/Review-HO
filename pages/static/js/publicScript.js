@@ -9,7 +9,24 @@ function findStory(n){
         dataType:'json',
         success:function(args){
             var len = Object.keys(args).length;
+            alert(len);
+
+            tc = 12;
+            // var tc = len / 5;
+            if(len % 5 != 0)
+                tc = tc + 1;
             
+            $('#pagination-demo').twbsPagination({
+                totalPages: 16,
+                visiblePages: 6,
+                next: 'Next',
+                prev: 'Prev',
+                onPageClick: function (event, page) {
+                    //fetch content and render here
+                    $('#page-content').text('Page ' + page) + ' content here';
+                }
+            });
+
             // 댓글 모음
             for(var i = 1; i <= len; i++){
                 var t = args[i]['text'];
@@ -55,4 +72,8 @@ function findAct(){
 
 function findSpelcial(){
     // 일단 보류 기능
+}
+
+function pageNavigator(){
+    
 }
