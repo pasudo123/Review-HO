@@ -135,6 +135,11 @@ table.reviewTable{
     text-indent: 2%;
 }
 
+div.pagination{
+    width:100%;
+    /* border:1px solid blue; */
+}
+
 /* div.reviewList img{
     width:3%;
     height:auto;
@@ -144,4 +149,11 @@ table.reviewTable{
 /* span.reviewText{
     padding-left:2%;
     cursor:auto;
+} */
+
+/* div.reviewList_ele{
+    font-family:'NanumSquareR'; 
+    font-size:1.7vw;
+    color:rgb(221, 221, 221);
+    vertical-align:middle;
 } */
