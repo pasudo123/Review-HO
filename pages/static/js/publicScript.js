@@ -103,6 +103,8 @@ function findStory(n){
 
                         skipText = t;
                         
+                        if(skipText == null)
+                            break;
                         if(t.length >= 70)
                             skipText = t.substring(0, 70) + " ...";
 
