@@ -24,6 +24,11 @@
     <link href="{% static 'css/materialize.min.css' %}" rel="stylesheet" >
     <script src="{% static 'js/materialize-pagination.js' %}"></script>
     <!--+++++++++++++++++++++++ Page Navigation Link +++++++++++++++++++++++-->
+    
+    <!--+++++++++++++++++++++++ Text ToolTip Link +++++++++++++++++++++++-->
+    <script src="{% static 'js/tooltipsy.min.js' %}"></script>
+    <!--+++++++++++++++++++++++ Text ToolTip Link +++++++++++++++++++++++-->
+    
     <!-- Demo styles -->
     <style>
         html, body {
@@ -67,16 +72,6 @@
     <!-- 포스터 이미지 불러오기 -->
     <SCRIPT>
         $(document).ready(function(){
-            // $('#myTable_1').pageMe({
-            //         pagerSelector:'#myPager',
-            //         activeColor: 'green',
-            //         prevText:'Anterior',
-            //         nextText:'Siguiente',
-            //         showPrevNext:true,
-            //         hidePageNumbers:false,
-            //         perPage:10
-            //     });
-
             setPoster();
         });
 
@@ -98,8 +93,23 @@
                         $('div#slide_' + i.toString()).find('div.poster').css("border", "1px solid black");
                         $('div#slide_' + i.toString()).find('div.movieTitle').text(title);
                         
-                        // 해당 영화에 대한 리뷰 내용, 문장 분류하고 입히기.
+                        // code 내용을 Naver 영화 내용과 연계지어서 크롤링
+                        setMovieInfo(code);
                     }
+                }
+            });
+        }
+
+        function setMovieInfo(code){
+            // for 구문으로부터 나온, 인덱스 1 : 박스오피스 순위 1
+            // 한번더 ajax
+
+            $.ajax({
+                url:'/Capstone/MovieGuide/MovieDetailInfo/',
+                data:{'code':code},
+                dataType:'JSON',
+                success:function(data){
+                    
                 }
             });
         }

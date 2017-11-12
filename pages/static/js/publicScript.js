@@ -32,42 +32,62 @@ function findStory(n){
 
                 // +++++++++++++++처음 다섯개만
                 if(i <= 5){
-                // 해당 영화 리뷰 목록 접근
-                var list = $('div#rNp_'+ number).find('table#myTable_' + number);
-                var ele = '<tr><td><div class="reviewList_ele">';
+                    // 해당 영화 리뷰 목록 접근
+                    var list = $('div#rNp_'+ number).find('table#myTable_' + number);
+                    var ele = '<tr><td><div class="reviewList_ele">';
 
-                // 부정 리뷰
-                if(s == 0){
-                    ele += '<img class="reviewSenti" src="../static/Image/negIcon.png"></img>';
+                    // 부정 리뷰
+                    if(s == 0){
+                        ele += '<img class="reviewSenti" src="../static/Image/negIcon.png"></img>';
+                    }
+                    // 긍정 리뷰
+                    else{
+                        ele += '<img class="reviewSenti" src="../static/Image/posIcon.png"></img>';
+                    }
+
+                    skipText = t;
+                    
+                    if(t.length >= 65)
+                        skipText = t.substring(0, 65) + " ...";
+
+                    ele += '<span class="reviewText"><a class="hastip" title=\'' + t + '\'>' + skipText + '</a></span></div></td></tr>';
+                    
+                    list.append(ele);
+
+                    $('table.reviewTable').find('td').css('padding-top', '0.7%');
+                    $('table.reviewTable').find('td').css('padding-bottom', '0.7%');
+
+                    $('table.reviewTable').find('div.reviewList_ele').css('font-family', 'NanumSquareR');
+                    $('table.reviewTable').find('div.reviewList_ele').css('font-size', '1.7vw');
+                    $('table.reviewTable').find('div.reviewList_ele').css('color', 'rgb(221, 221, 221)');
+                    $('table.reviewTable').find('div.reviewList_ele').css('vertical-align', 'middle');
+
+                    $('table.reviewTable').find('img').css('width', '3%');
+                    $('table.reviewTable').find('img').css('height', 'auto');
+
+                    $('table.reviewTable').find('span').css('padding-left', '2%');
+                    $('table.reviewTable').find('span').css('cursor', 'default');
+
+                    $('table.reviewTable').find('span').find('a').css('color', 'white');
+                    $('table.reviewTable').find('span').find('a').hover(function(){
+                        $(this).css('color','#a7cdc6');
+                        $(this).css('text-decoration', 'none');
+                        },
+                        function(){ $(this).css('color','white');
+                    });
+
+                    // $('table#myTable_' + number).find('a').tooltipsy({
+                    //     className: 'myTooltip',
+                    //     offset: [0, 10],
+                    //     show: function (e, $el) {
+                    //         $el.fadeIn(100);
+                    //     },
+                    //     hide: function (e, $el) {
+                    //         $el.fadeOut(500);
+                    //     }
+                    // });
                 }
-                // 긍정 리뷰
-                else{
-                    ele += '<img class="reviewSenti" src="../static/Image/posIcon.png"></img>';
-                }
-
-                skipText = t;
-                
-                if(t.length >= 70)
-                    skipText = t.substring(0, 70) + " ...";
-
-                ele += '<span class="reviewText">' + skipText + '</span></div></td></tr>';
-                
-                list.append(ele);
-
-                $('table.reviewTable').find('td').css('padding-top', '0.7%');
-                $('table.reviewTable').find('td').css('padding-bottom', '0.7%');
-
-                $('table.reviewTable').find('div.reviewList_ele').css('font-family', 'NanumSquareR');
-                $('table.reviewTable').find('div.reviewList_ele').css('font-size', '1.7vw');
-                $('table.reviewTable').find('div.reviewList_ele').css('color', 'rgb(221, 221, 221)');
-                $('table.reviewTable').find('div.reviewList_ele').css('vertical-align', 'middle');
-
-                $('table.reviewTable').find('img').css('width', '3%');
-                $('table.reviewTable').find('img').css('height', 'auto');
-
-                $('table.reviewTable').find('span').css('padding-left', '2%');
-                $('table.reviewTable').find('span').css('cursor', 'auto');
-                }
+                // +++++++++++++++처음 다섯개만
             }
 
             $('#pagination_'+number).materializePagination({
@@ -105,10 +125,10 @@ function findStory(n){
                         
                         if(skipText == null)
                             break;
-                        if(t.length >= 70)
-                            skipText = t.substring(0, 70) + " ...";
+                        if(t.length >= 65)
+                            skipText = t.substring(0, 65) + " ...";
 
-                        ele += '<span class="reviewText">' + skipText + '</span></div></td></tr>';
+                        ele += '<span class="reviewText"><a title=\'' + t + '\'>' + skipText + '</a></span></div></td></tr>';
                         
                         list.append(ele);
 
@@ -124,7 +144,26 @@ function findStory(n){
                         $('table.reviewTable').find('img').css('height', 'auto');
 
                         $('table.reviewTable').find('span').css('padding-left', '2%');
-                        $('table.reviewTable').find('span').css('cursor', 'auto');
+                        $('table.reviewTable').find('span').css('cursor', 'default');
+
+                        $('table.reviewTable').find('span').find('a').css('color', 'white');
+                        $('table.reviewTable').find('span').find('a').hover(function(){
+                            $(this).css('color','#a7cdc6');
+                            $(this).css('text-decoration', 'none');
+                            },
+                            function(){ $(this).css('color','white');
+                        });
+
+                        // $('table#myTable_' + number).find('a').tooltipsy({
+                        //     className: 'myTooltip',
+                        //     offset: [0, 10],
+                        //     show: function (e, $el) {
+                        //         $el.fadeIn(100);
+                        //     },
+                        //     hide: function (e, $el) {
+                        //         $el.fadeOut(500);
+                        //     }
+                        // });
                     }
 
                     console.log('Requested page from #pagination : ' + requestedPage);
