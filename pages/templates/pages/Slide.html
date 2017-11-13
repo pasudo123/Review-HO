@@ -94,13 +94,16 @@
                         $('div#slide_' + i.toString()).find('div.movieTitle').text(title);
                         
                         // code 내용을 Naver 영화 내용과 연계지어서 크롤링
-                        setMovieInfo(code);
+                        // setMovieInfo(code, i);
+                        
+                        // if(i == 2)
+                        setMovieInfo(code, i);
                     }
                 }
             });
         }
 
-        function setMovieInfo(code){
+        function setMovieInfo(code, i){
             // for 구문으로부터 나온, 인덱스 1 : 박스오피스 순위 1
             // 한번더 ajax
 
@@ -108,8 +111,49 @@
                 url:'/Capstone/MovieGuide/MovieDetailInfo/',
                 data:{'code':code},
                 dataType:'JSON',
-                success:function(data){
+                
+                success:function(data_result){
+                    var m_info = data_result;
                     
+                    var open = m_info['open'];
+                    var count = m_info['count'];
+                    var grade = m_info['grade'];
+                    var nation = m_info['nation'];
+                    var overview = m_info['overview'];
+                    var director = m_info['director'];
+                    var runningTime = m_info['runningTime'];
+
+                    count = count.replace("명","관객");
+                    count = count.split("(")[0];
+                    var count_1 = count.substr(0, count.length-2); 
+                    var count_2 = count.substr(count.length-2, 2);
+
+                    var h_area = m_info['h_area'];    
+                    h_area = h_area.replace("\r\n", "<br>");  
+                    var p_area = m_info['p_area'];
+
+                    // 순서
+                    var seq = i;
+                    
+                    $('div#slide_' + i.toString()).find('span.count').text(count_1);
+                    $('div#slide_' + i.toString()).find('span.count').append('<span></span>');
+                    $('div#slide_' + i.toString()).find('span.count > span').text(count_2);
+
+                    $('div#slide_' + i.toString()).find('span.nation').text(nation);
+                    $('div#slide_' + i.toString()).find('span.ov').text(overview);
+                    $('div#slide_' + i.toString()).find('span.grade').text(grade);
+                    $('div#slide_' + i.toString()).find('span.open').text(open);
+                    $('div#slide_' + i.toString()).find('span.open').append('<span></span>');
+                    $('div#slide_' + i.toString()).find('span.open > span').text(' 개봉');
+                    
+                    if(h_area == "-"){
+                        $('div#slide_' + i.toString()).find('div.h_story').remove();
+                    }
+                    else{
+                        $('div#slide_' + i.toString()).find('div.h_story').html(h_area);
+                    } 
+
+                    $('div#slide_' + i.toString()).find('div.p_story').text(p_area);
                 }
             });
         }
@@ -135,9 +179,20 @@
 
                         <div class="movieContent">
                             <div>
-                                <div class="movieTitle">
+                                <div class="movieTitle"></div>
+                            </div>
 
-                                </div>
+                            <div class="movieInfo">
+                                <span class="nation">한국</span>&nbsp;&nbsp;|&nbsp;
+                                <span class="ov">액션</span>&nbsp;&nbsp;|&nbsp;
+                                <span class="grade">청소년 관람불가</span>&nbsp;&nbsp;|&nbsp;
+                                <span class="open">2017.10.03<span>&nbsp;개봉</span></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="count"><span></span></span>
+                            </div>
+
+                            <div class="movieStory">
+                                <div class="h_story">“오늘 밤, 다 쓸어버린다!”</div>
+                                <div class="p_story">2004년 서울…&하얼빈에서 넘어와 단숨에 기존 조직들을 장악하고&가장 강력한 세력인 춘식이파 보스 ‘황사장(조재윤 </div>
                             </div>
                         </div>
                     </div>
@@ -175,9 +230,20 @@
 
                         <div class="movieContent">
                             <div>
-                                <div class="movieTitle">
-                                    
-                                </div>
+                                <div class="movieTitle"></div>
+                            </div>
+
+                            <div class="movieInfo">
+                                <span class="nation"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="ov"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="grade"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="open"><span>&nbsp;</span></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="count"><span></span></span>
+                            </div>
+
+                            <div class="movieStory">
+                                <div class="h_story"></div>
+                                <div class="p_story"></div>
                             </div>
                         </div>
                     </div>
@@ -209,9 +275,20 @@
 
                         <div class="movieContent">
                             <div>
-                                <div class="movieTitle">
-                                    
-                                </div>
+                                <div class="movieTitle"></div>
+                            </div>
+
+                            <div class="movieInfo">
+                                <span class="nation"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="ov"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="grade"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="open"><span>&nbsp;</span></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="count"><span></span></span>
+                            </div>
+
+                            <div class="movieStory">
+                                <div class="h_story"></div>
+                                <div class="p_story"></div>
                             </div>
                         </div>
                     </div>
@@ -243,9 +320,20 @@
 
                         <div class="movieContent">
                             <div>
-                                <div class="movieTitle">
-                                    
-                                </div>
+                                <div class="movieTitle"></div>
+                            </div>
+
+                            <div class="movieInfo">
+                                <span class="nation"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="ov"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="grade"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="open"><span>&nbsp;</span></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="count"><span></span></span>
+                            </div>
+
+                            <div class="movieStory">
+                                <div class="h_story"></div>
+                                <div class="p_story"></div>
                             </div>
                         </div>
                     </div>
@@ -277,9 +365,20 @@
 
                         <div class="movieContent">
                             <div>
-                                <div class="movieTitle">
-                                    
-                                </div>
+                                <div class="movieTitle"></div>
+                            </div>
+
+                            <div class="movieInfo">
+                                <span class="nation"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="ov"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="grade"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="open"><span>&nbsp;</span></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="count"><span></span></span>
+                            </div>
+
+                            <div class="movieStory">
+                                <div class="h_story"></div>
+                                <div class="p_story"></div>
                             </div>
                         </div>
                     </div>
@@ -311,9 +410,20 @@
 
                         <div class="movieContent">
                             <div>
-                                <div class="movieTitle">
-                                    
-                                </div>
+                                <div class="movieTitle"></div>
+                            </div>
+
+                            <div class="movieInfo">
+                                <span class="nation"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="ov"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="grade"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="open"><span>&nbsp;</span></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="count"><span></span></span>
+                            </div>
+
+                            <div class="movieStory">
+                                <div class="h_story"></div>
+                                <div class="p_story"></div>
                             </div>
                         </div>
                     </div>
@@ -345,9 +455,20 @@
 
                         <div class="movieContent">
                             <div>
-                                <div class="movieTitle">
-                                    
-                                </div>
+                                <div class="movieTitle"></div>
+                            </div>
+
+                            <div class="movieInfo">
+                                <span class="nation"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="ov"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="grade"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="open"><span>&nbsp;</span></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="count"><span></span></span>
+                            </div>
+
+                            <div class="movieStory">
+                                <div class="h_story"></div>
+                                <div class="p_story"></div>
                             </div>
                         </div>
                     </div>
@@ -379,9 +500,20 @@
 
                         <div class="movieContent">
                             <div>
-                                <div class="movieTitle">
-                                    
-                                </div>
+                                <div class="movieTitle"></div>
+                            </div>
+
+                            <div class="movieInfo">
+                                <span class="nation"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="ov"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="grade"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="open"><span>&nbsp;</span></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="count"><span></span></span>
+                            </div>
+
+                            <div class="movieStory">
+                                <div class="h_story"></div>
+                                <div class="p_story"></div>
                             </div>
                         </div>
                     </div>
@@ -413,9 +545,20 @@
 
                         <div class="movieContent">
                             <div>
-                                <div class="movieTitle">
-                                    슬라이드 9
-                                </div>
+                                <div class="movieTitle"></div>
+                            </div>
+
+                            <div class="movieInfo">
+                                <span class="nation"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="ov"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="grade"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="open"><span>&nbsp;</span></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="count"><span></span></span>
+                            </div>
+
+                            <div class="movieStory">
+                                <div class="h_story"></div>
+                                <div class="p_story"></div>
                             </div>
                         </div>
                     </div>
@@ -447,9 +590,20 @@
 
                         <div class="movieContent">
                             <div>
-                                <div class="movieTitle">
-                                    슬라이드 10
-                                </div>
+                                <div class="movieTitle"></div>
+                            </div>
+
+                            <div class="movieInfo">
+                                <span class="nation"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="ov"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="grade"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="open"><span>&nbsp;</span></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="count"><span></span></span>
+                            </div>
+
+                            <div class="movieStory">
+                                <div class="h_story"></div>
+                                <div class="p_story"></div>
                             </div>
                         </div>
                     </div>

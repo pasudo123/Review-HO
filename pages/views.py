@@ -128,7 +128,103 @@ class MovieRank:
         except:
             return 'http://static.naver.net/movie/2012/06/dft_img203x290.png', ''
     
-    
+    # 영화코드에 해당하는 영화 상세 내용 크롤
+    def get_movieDetail(self, code):
+
+        ###################################
+        #      영화 상세 정보 수집 내용
+        #   장르 | 국가 | 러닝타임 | 개봉날짜
+        #   감독 | 등급 | 
+        #   누적관객 | 줄거리
+        ###################################
+        data = urllib.request.urlopen('http://movie.naver.com/movie/bi/mi/basic.nhn?code=' + code).read().decode('UTF-8')
+        page = bs4.BeautifulSoup(re.sub("&#(?![0-9])", "", data), "html.parser")
+        info_spec = page.find('dl', class_='info_spec')
+        story_Area = page.find('div', class_='story_area')
+        
+        # dd 태그
+        # print(info_spec)
+        ddList = info_spec.select("dd")
+        
+        # 영화정보 dict
+        movie_info_dict = {
+            'overview':'',
+            'nation':'',
+            'runningTime':'',
+            'open':'',
+            'director':'',
+            'grade':'',
+            'count':'',
+            'h_area':'',
+            'p_area':''
+        }
+
+        infoList = list()
+
+        
+        # 개요 나라 시간 날짜 등급 관객
+        ov = ddList[0].select('span:nth-of-type(1)')[0].select('a')  # 개요
+        nt = ddList[0].select('span:nth-of-type(2)')[0].get_text().strip()  # 나라
+        rt = ddList[0].select('span:nth-of-type(3)')[0].get_text().strip()  # 시간
+        year = ddList[0].select('span:nth-of-type(4)')[0].select('a:nth-of-type(1)')[0].get_text().strip()
+        month = ddList[0].select('span:nth-of-type(4)')[0].select('a:nth-of-type(2)')[0].get_text().strip()
+        directer = ddList[1].get_text().strip()
+        grade = ddList[3].select('a')[0].get_text()
+        mCnt = ddList[4].select('p.count')[0].get_text().strip()
+        
+        ntStr = str()
+        check = nt.find(",")
+        if check != -1:
+            ntList = nt.split(",")
+        
+            for index, nt_e in enumerate(ntList):
+                nt_e = nt_e.replace("\r", "")
+                nt_e = nt_e.replace("\t", "")
+                nt_e = nt_e.replace("\n", "")
+                ntStr = ntStr + nt_e.strip()
+                if index != ntList.__len__()-1:
+                    ntStr = ntStr + ","
+
+            ntStr = ntStr.replace(",", " ")
+        
+        else:
+            ntStr = nt
+            
+        # 콤마로 구분되는 영화 개요
+        ovStr = str()
+        for index, ov_e in enumerate(ov):
+            ovStr = ovStr + ov_e.get_text().strip()
+            if index != ov.__len__()-1:
+                ovStr = ovStr + ","
+        
+        ovStr = ovStr.replace(",", " ")
+
+        movie_info_dict['overview'] = ovStr
+        movie_info_dict['nation'] = ntStr
+        movie_info_dict['open'] = year + month
+        movie_info_dict['director'] = directer
+        movie_info_dict['grade'] = grade
+        movie_info_dict['runningTime'] = rt
+        movie_info_dict['count'] = mCnt
+
+        # pprint(movie_info_dict)
+        # print(story_Area.select('h5.h_tx_story')[0].get_text())
+        area_data = str(story_Area.select('p.con_tx')[0]).replace("\xa0", "")
+        area_data = area_data.replace("<br>"," ")
+        area_soup = bs4.BeautifulSoup(re.sub("&#(?![0-9])", "", area_data), "html.parser")
+        # print(area_soup.get_text())
+
+        try:
+            movie_info_dict['h_area'] = story_Area.select('h5.h_tx_story')[0].get_text()
+        except IndexError:
+            movie_info_dict['h_area'] = "-"
+
+        movie_info_dict['p_area'] = area_soup.get_text()
+
+        # 영화정보 dict 반환
+        return movie_info_dict
+
+        
 mr = MovieRank()                # 영화정보 크롤관련 클래스 객체
 ranks = mr.get_movieRanking()   # 영화순위 메소드
 
@@ -336,3 +432,11 @@ def getStory(request):
                             reviewNSenti['senti'] = senti
 
     return JsonResponse(reviews)
+
+def getMovieDetailInfo(requests):
+    code = requests.GET.get('code', None)
+    m_info = mr.get_movieDetail(code)
+    print(code)
+    # pprint(m_info)
+
+    return JsonResponse(m_info, safe=False)
