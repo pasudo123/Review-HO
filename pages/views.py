@@ -189,7 +189,7 @@ class MovieRank:
         
         else:
             ntStr = nt
-            
+        
         # 콤마로 구분되는 영화 개요
         ovStr = str()
         for index, ov_e in enumerate(ov):
@@ -398,8 +398,21 @@ def getMovieReviews(request):
 
 @csrf_exempt
 def getStory(request):
-    # 해당 넘버 가지고옴, (= 박스오피스 순위)
+    # 해당 넘버 가지고옴, (= 박스오피스 순위, rank)
     rank = request.GET.get('number', None)
+    case = request.GET.get('case',None)
+    
+    dtm_case = str()
+
+    if case == 'story':
+        dtm_case = '내용'
+
+    elif case == 'sound':
+        dtm_case = 'OST'
+
+    elif case == 'act':
+        dtm_case = '배우'
+
     title = str()
     reviews = dict()
 
@@ -416,7 +429,7 @@ def getStory(request):
     for root, dirs, files in os.walk(os.path.join(os.getcwd(), "pages", "static", "File", "Classification")):
         for f in files:
             if f.split("_DTM")[0] == title:
-                if f.split("&&")[1].split(".")[0] == "내용":
+                if f.split("&&")[1].split(".")[0] == dtm_case:
                     with open(root + "\\" + f, "r", encoding="UTF-8") as rf:
                         lines = rf.readlines()
 
@@ -436,7 +449,6 @@ def getStory(request):
 def getMovieDetailInfo(requests):
     code = requests.GET.get('code', None)
     m_info = mr.get_movieDetail(code)
-    print(code)
     # pprint(m_info)
 
     return JsonResponse(m_info, safe=False)

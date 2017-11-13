@@ -146,7 +146,7 @@ div.inner_top > div.movieContent > div.movieStory > div.p_story::-webkit-scrollb
 }
 
 div.inner_top > div.movieContent > div.movieStory > div.p_story::-webkit-scrollbar-thumb{
-    background-color: #3366FF;
+    background-color: rgb(62, 105, 161);
 	background-image: -webkit-linear-gradient(0deg,
 	                                          rgba(255, 255, 255, 0.5) 25%,
 											  transparent 25%,
@@ -193,6 +193,7 @@ nav.top_menu li.menu_li:hover{
     cursor: pointer;
     background-color: #4d4d4d;
 }
+
 /* box office 하단 */
 /* 영화 리뷰내용 측면 */
 
@@ -213,24 +214,19 @@ div.pagination{
     width:100%;
 }
 
-/* div.reviewList img{
-    width:3%;
-    height:auto;
-    padding-bottom:0.4%;
-} */
+div.summaryDiv{
+	position:absolute;
+	left:0;
+	top:60%;
+	width:100%;
+	height:35%;
+	border:1px solid red;
+}
 
-/* span.reviewText{
-    padding-left:2%;
-    cursor:auto;
-} */
-
-/* div.reviewList_ele{
-    font-family:'NanumSquareR'; 
-    font-size:1.7vw;
-    color:rgb(221, 221, 221);
-    vertical-align:middle;
-} */
-
+/* 
+open source 긁은건데 css 적용이 안됨
+이유는 모름...
+*/
 .myTooltip{
     padding: 10px;
     color: #fff;

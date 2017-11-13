@@ -94,9 +94,6 @@
                         $('div#slide_' + i.toString()).find('div.movieTitle').text(title);
                         
                         // code 내용을 Naver 영화 내용과 연계지어서 크롤링
-                        // setMovieInfo(code, i);
-                        
-                        // if(i == 2)
                         setMovieInfo(code, i);
                     }
                 }
@@ -183,16 +180,16 @@
                             </div>
 
                             <div class="movieInfo">
-                                <span class="nation">한국</span>&nbsp;&nbsp;|&nbsp;
-                                <span class="ov">액션</span>&nbsp;&nbsp;|&nbsp;
-                                <span class="grade">청소년 관람불가</span>&nbsp;&nbsp;|&nbsp;
-                                <span class="open">2017.10.03<span>&nbsp;개봉</span></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="nation"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="ov"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="grade"></span>&nbsp;&nbsp;|&nbsp;
+                                <span class="open"><span>&nbsp;</span></span>&nbsp;&nbsp;|&nbsp;
                                 <span class="count"><span></span></span>
                             </div>
 
                             <div class="movieStory">
-                                <div class="h_story">“오늘 밤, 다 쓸어버린다!”</div>
-                                <div class="p_story">2004년 서울…&하얼빈에서 넘어와 단숨에 기존 조직들을 장악하고&가장 강력한 세력인 춘식이파 보스 ‘황사장(조재윤 </div>
+                                <div class="h_story"></div>
+                                <div class="p_story"></div>
                             </div>
                         </div>
                     </div>
@@ -200,7 +197,7 @@
                     <div class="inner_bot">
                         <nav class="top_menu">
                             <ul>
-                                <li class="menu_li" id="special_Review_1_btn" onclick="findSpecial(1)">Special</li>
+                                <li class="menu_li" id="summary_Review_1_btn" onclick="findSummary(1)">Summary</li>
                                 <li class="menu_li" id="story_Review_1_btn" onclick="findStory(1)">Story</li>
                                 <li class="menu_li" id="sound_Review_1_btn" onclick="findSound(1)">Sound</li>
                                 <li class="menu_li" id="act_Review_1_btn" onclick="findAct(1)">Act</li>
@@ -210,6 +207,10 @@
                         <div id="rNp_1" class="rNp_List">
                             <table id="myTable_1" class="reviewTable"></table>
                             <div id="pagination_1" class="pagination"></div>
+                        </div>
+
+                        <div id="summaryBox_1" class="summaryDiv">
+                            
                         </div>
                     </div>
                 </div>
@@ -251,12 +252,17 @@
                     <div class="inner_bot">
                         <nav class="top_menu">
                             <ul>
-                                <li class="menu_li" id="special_Review_2_btn">Special</li>
-                                <li class="menu_li" id="story_Review_2_btn">Story</li>
-                                <li class="menu_li" id="sound_Review_2_btn">Sound</li>
-                                <li class="menu_li" id="act_Review_2_btn">Act</li>
+                                <li class="menu_li" id="summary_Review_2_btn" onclick="findSummary(2)">Summary</li>
+                                <li class="menu_li" id="story_Review_2_btn" onclick="findStory(2)">Story</li>
+                                <li class="menu_li" id="sound_Review_2_btn" onclick="findSound(2)">Sound</li>
+                                <li class="menu_li" id="act_Review_2_btn" onclick="findAct(2)">Act</li>
                             </ul>
                         </nav>
+
+                        <div id="rNp_2" class="rNp_List">
+                            <table id="myTable_2" class="reviewTable"></table>
+                            <div id="pagination_2" class="pagination"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -296,12 +302,17 @@
                     <div class="inner_bot">
                         <nav class="top_menu">
                             <ul>
-                                <li class="menu_li">Story</li>
-                                <li class="menu_li">Sound</li>
-                                <li class="menu_li">Act</li>
-                                <li class="menu_li">Special</li>
+                                <li class="menu_li" id="summary_Review_3_btn" onclick="findSummary(3)">Summary</li>
+                                <li class="menu_li" id="story_Review_3_btn" onclick="findStory(3)">Story</li>
+                                <li class="menu_li" id="sound_Review_3_btn" onclick="findSound(3)">Sound</li>
+                                <li class="menu_li" id="act_Review_3_btn" onclick="findAct(3)">Act</li>
                             </ul>
                         </nav>
+
+                        <div id="rNp_3" class="rNp_List">
+                            <table id="myTable_3" class="reviewTable"></table>
+                            <div id="pagination_3" class="pagination"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -341,12 +352,17 @@
                     <div class="inner_bot">
                         <nav class="top_menu">
                             <ul>
-                                <li class="menu_li">Story</li>
-                                <li class="menu_li">Sound</li>
-                                <li class="menu_li">Act</li>
-                                <li class="menu_li">Special</li>
+                                <li class="menu_li" id="summary_Review_4_btn" onclick="findSummary(4)">Summary</li>
+                                <li class="menu_li" id="story_Review_4_btn" onclick="findStory(4)">Story</li>
+                                <li class="menu_li" id="sound_Review_4_btn" onclick="findSound(4)">Sound</li>
+                                <li class="menu_li" id="act_Review_4_btn" onclick="findAct(4)">Act</li>
                             </ul>
                         </nav>
+
+                        <div id="rNp_4" class="rNp_List">
+                            <table id="myTable_4" class="reviewTable"></table>
+                            <div id="pagination_4" class="pagination"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -386,12 +402,17 @@
                     <div class="inner_bot">
                         <nav class="top_menu">
                             <ul>
-                                <li class="menu_li">Story</li>
-                                <li class="menu_li">Sound</li>
-                                <li class="menu_li">Act</li>
-                                <li class="menu_li">Special</li>
+                                <li class="menu_li" id="summary_Review_5_btn" onclick="findSummary(5)">Summary</li>
+                                <li class="menu_li" id="story_Review_5_btn" onclick="findStory(5)">Story</li>
+                                <li class="menu_li" id="sound_Review_5_btn" onclick="findSound(5)">Sound</li>
+                                <li class="menu_li" id="act_Review_5_btn" onclick="findAct(5)">Act</li>
                             </ul>
                         </nav>
+
+                        <div id="rNp_5" class="rNp_List">
+                            <table id="myTable_5" class="reviewTable"></table>
+                            <div id="pagination_5" class="pagination"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -431,12 +452,17 @@
                     <div class="inner_bot">
                         <nav class="top_menu">
                             <ul>
-                                <li class="menu_li">Story</li>
-                                <li class="menu_li">Sound</li>
-                                <li class="menu_li">Act</li>
-                                <li class="menu_li">Special</li>
+                                <li class="menu_li" id="summary_Review_6_btn" onclick="findSummary(6)">Summary</li>
+                                <li class="menu_li" id="story_Review_6_btn" onclick="findStory(6)">Story</li>
+                                <li class="menu_li" id="sound_Review_6_btn" onclick="findSound(6)">Sound</li>
+                                <li class="menu_li" id="act_Review_6_btn" onclick="findAct(6)">Act</li>
                             </ul>
                         </nav>
+
+                        <div id="rNp_6" class="rNp_List">
+                            <table id="myTable_6" class="reviewTable"></table>
+                            <div id="pagination_6" class="pagination"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -476,12 +502,17 @@
                     <div class="inner_bot">
                         <nav class="top_menu">
                             <ul>
-                                <li class="menu_li">Story</li>
-                                <li class="menu_li">Sound</li>
-                                <li class="menu_li">Act</li>
-                                <li class="menu_li">Special</li>
+                                <li class="menu_li" id="summary_Review_7_btn" onclick="findSummary(7)">Summary</li>
+                                <li class="menu_li" id="story_Review_7_btn" onclick="findStory(7)">Story</li>
+                                <li class="menu_li" id="sound_Review_7_btn" onclick="findSound(7)">Sound</li>
+                                <li class="menu_li" id="act_Review_7_btn" onclick="findAct(7)">Act</li>
                             </ul>
                         </nav>
+
+                        <div id="rNp_7" class="rNp_List">
+                            <table id="myTable_7" class="reviewTable"></table>
+                            <div id="pagination_7" class="pagination"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -521,12 +552,17 @@
                     <div class="inner_bot">
                         <nav class="top_menu">
                             <ul>
-                                <li class="menu_li">Story</li>
-                                <li class="menu_li">Sound</li>
-                                <li class="menu_li">Act</li>
-                                <li class="menu_li">Special</li>
+                                <li class="menu_li" id="summary_Review_8_btn" onclick="findSummary(8)">Summary</li>
+                                <li class="menu_li" id="story_Review_8_btn" onclick="findStory(8)">Story</li>
+                                <li class="menu_li" id="sound_Review_8_btn" onclick="findSound(8)">Sound</li>
+                                <li class="menu_li" id="act_Review_8_btn" onclick="findAct(8)">Act</li>
                             </ul>
                         </nav>
+
+                        <div id="rNp_8" class="rNp_List">
+                            <table id="myTable_8" class="reviewTable"></table>
+                            <div id="pagination_8" class="pagination"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -566,12 +602,17 @@
                     <div class="inner_bot">
                         <nav class="top_menu">
                             <ul>
-                                <li class="menu_li">Story</li>
-                                <li class="menu_li">Sound</li>
-                                <li class="menu_li">Act</li>
-                                <li class="menu_li">Special</li>
+                                <li class="menu_li" id="summary_Review_9_btn" onclick="findSummary(9)">Summary</li>
+                                <li class="menu_li" id="story_Review_9_btn" onclick="findStory(9)">Story</li>
+                                <li class="menu_li" id="sound_Review_9_btn" onclick="findSound(9)">Sound</li>
+                                <li class="menu_li" id="act_Review_9_btn" onclick="findAct(9)">Act</li>
                             </ul>
                         </nav>
+
+                        <div id="rNp_9" class="rNp_List">
+                            <table id="myTable_9" class="reviewTable"></table>
+                            <div id="pagination_9" class="pagination"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -611,12 +652,17 @@
                     <div class="inner_bot">
                         <nav class="top_menu">
                             <ul>
-                                <li class="menu_li">Story</li>
-                                <li class="menu_li">Sound</li>
-                                <li class="menu_li">Act</li>
-                                <li class="menu_li">Special</li>
+                                <li class="menu_li" id="summary_Review_10_btn" onclick="findSummary(10)">Summary</li>
+                                <li class="menu_li" id="story_Review_10_btn" onclick="findStory(10)">Story</li>
+                                <li class="menu_li" id="sound_Review_10_btn" onclick="findSound(10)">Sound</li>
+                                <li class="menu_li" id="act_Review_10_btn" onclick="findAct(10)">Act</li>
                             </ul>
                         </nav>
+
+                        <div id="rNp_10" class="rNp_List">
+                            <table id="myTable_10" class="reviewTable"></table>
+                            <div id="pagination_10" class="pagination"></div>
+                        </div>
                     </div>
                 </div>
             </div>
