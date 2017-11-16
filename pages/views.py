@@ -170,7 +170,11 @@ class MovieRank:
         month = ddList[0].select('span:nth-of-type(4)')[0].select('a:nth-of-type(2)')[0].get_text().strip()
         directer = ddList[1].get_text().strip()
         grade = ddList[3].select('a')[0].get_text()
-        mCnt = ddList[4].select('p.count')[0].get_text().strip()
+        
+        try:
+            mCnt = ddList[4].select('p.count')[0].get_text().strip()
+        except:
+            mCnt = '0명()'
         
         ntStr = str()
         check = nt.find(",")
@@ -452,3 +456,74 @@ def getMovieDetailInfo(requests):
     # pprint(m_info)
 
     return JsonResponse(m_info, safe=False)
+
+def cal_LikeHate(requests):
+    """
+    # 박스오피스의 순위 영화들 
+
+    (1) 
+    [ 스토리 ] [ 음향 ] [ 연기 ]
+    에 대해서 해당 영화에 각각의 리뷰가 얼마인지 비율 표현,
+
+    (2)
+    위의 세가지 기준을 통해서 좋아요와 싫어요 비율 표현.
+    """
+
+    JSONData = OrderedDict()
+
+    rank_param = requests.GET.get('rank', None)
+
+    if rank_param == '0' :
+        with open(os.path.join(os.getcwd(), "pages", "static", "File", "movieInfo.json"), encoding='UTF-8') as jFile:
+            loadData = json.load(jFile)
+            for index in range(1, 11):
+                # 해당 영화 타이틀에서 요소 비율 확인.
+                movieTitle = loadData[str(index)]["title"]
+
+                # 해당 영화 타이틀에 대해 dict()
+                movieRatio = OrderedDict()
+
+                for root, dirs, files in os.walk(os.path.join(os.getcwd(), "pages", "static", "File", "Classification")):
+                    for f in files:
+                        # 해당 영화 제목
+                        if f.split("_DTM")[0] == movieTitle:
+                            j_rank = index
+                            
+                            # 해당 영화제목의 분류 기준.
+                            j_tag = f.split("&&")[1].split(".")[0]
+                            rf = open(root + "\\" + f, "r", encoding="UTF-8")
+                            
+                            lines = rf.readlines()
+                            # print(movieTitle)
+                            # print(j_tag)
+                            # print(lines.__len__())
+
+                            moviePrefer = OrderedDict()
+                            JSONData[j_rank] = movieRatio
+
+                            if j_tag == "내용" :
+                                movieRatio['Story'] = lines.__len__()
+                                movieRatio['Story_Ratio'] = moviePrefer
+                            if j_tag == "OST" :
+                                movieRatio['Sound'] = lines.__len__()
+                                movieRatio['Sound_Ratio'] = moviePrefer
+                            if j_tag == "배우" :  
+                                movieRatio['Act'] = lines.__len__()
+                                movieRatio['Act_Ratio'] = moviePrefer
+                            
+                            like = 0
+                            hate = 0
+                            for line in lines:
+                                prefer = int(line.split("$$")[0])
+                                if prefer == 1:
+                                    like = like + 1
+                                elif prefer == 0:
+                                    hate = hate + 1
+                                    
+                            moviePrefer['Like'] = like
+                            moviePrefer['Hate'] = hate
+
+    else:                       
+        print()
+
+    return JsonResponse(JSONData, safe=False)

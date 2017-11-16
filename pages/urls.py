@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^MovieGuide/MovieInfo/$', views.getMovieInfo, name='getMovieInfo'),
     url(r'^MovieGuide/MovieReviews/$', views.getMovieReviews, name='getMovieReviews'),
     url(r'^MovieGuide/getStory/$', views.getStory, name='getStory'),
-    url(r'^MovieGuide/MovieDetailInfo/$', views.getMovieDetailInfo, name='getMovieDetailInfo')
+    url(r'^MovieGuide/MovieDetailInfo/$', views.getMovieDetailInfo, name='getMovieDetailInfo'),
+    url(r'^MovieGuide/MovieLikeHate/$', views.cal_LikeHate, name='cal_LikeHate'),
 ]

@@ -29,6 +29,8 @@
     <script src="{% static 'js/tooltipsy.min.js' %}"></script>
     <!--+++++++++++++++++++++++ Text ToolTip Link +++++++++++++++++++++++-->
     
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
     <!-- Demo styles -->
     <style>
         html, body {
@@ -73,6 +75,7 @@
     <SCRIPT>
         $(document).ready(function(){
             setPoster();
+            setSummary(0);
         });
 
         function setPoster(){
@@ -154,6 +157,66 @@
                 }
             });
         }
+
+        // 좋아요와 싫어요에 대한 내용 추출.
+        function setSummary(n){
+            var number = n;
+
+            $.ajax({
+                url:'/Capstone/MovieGuide/MovieLikeHate/',
+                data:{'rank':number},
+                dataType:'JSON',
+
+                success:function(data_result){
+                    
+                    for(var i = 1; i <= 10; i++){
+                        // 해당 i 랭크에 대한 데이터 추출
+                        rankData = data_result[i];
+                        
+                        sizeOfSound = rankData['Sound'];
+                        sizeOfStory = rankData['Story'];
+                        sizeOfAct = rankData['Act'];
+                        sizeOfFull = sizeOfSound + sizeOfStory + sizeOfAct;
+                        
+                        alert(sizeOfSound);
+
+                        LikeOfSound = rankData['Sound_Ratio'][0];
+                        HateOfSound = rankData['Sound_Ratio'][1];
+
+                        LikeOfStory = rankData['Story_Ratio'][0];
+                        HateOfStory = rankData['Story_Ratio'][1];
+
+                        LikeOfAct = rankData['Act_Ratio'][0];
+                        HateOfAct = rankData['Act_Ratio'][1];
+
+                        //++ google pie chart ++ 
+                        google.charts.load('current', {'packages':['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
+                        //++ google pie chart ++ 
+                    }
+                }
+            });
+        }
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+            ['Task', 'Hours per Day'],
+            ['Story',     11],
+            ['Sound',      5],
+            ['Act',  6]
+            ]);
+
+            // var number = n;
+            // alert(number)
+
+            var options = {
+            title: 'My Daily Activities',
+            is3D: true,
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart.draw(data, options);
+        }
     </SCRIPT>
 </head>
 <body>
@@ -210,7 +273,7 @@
                         </div>
 
                         <div id="summaryBox_1" class="summaryDiv">
-                            
+                            <div id="piechart">s</div>
                         </div>
                     </div>
                 </div>
