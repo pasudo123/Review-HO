@@ -50,12 +50,14 @@ function setReview(args, number){
     $('div#rNp_'+ number).find('div.pagination ul').remove();
 
     // summary 부분이 보여지고 있다면, visible 속성으로 보이지 않도록 한다.
-    if($('div#summaryBox_' + number).css("display") != "none")
+    if($('div#summaryBox_' + number).css("display") != "none"){
         $('div#summaryBox_' + number).toggle();
+    }
 
     var len = Object.keys(args).length;
 
     pageSize = len / 5;
+
     // 나머지 확인
     if(len % 5 != 0)
         pageSize += 1; 
