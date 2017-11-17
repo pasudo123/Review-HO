@@ -21,12 +21,6 @@ from bs4 import BeautifulSoup
 from django.core import serializers
 from concurrent.futures import ThreadPoolExecutor
 
-def show_main(request):
-    return render(request, 'pages/MainPage.html', {})
-
-def show_intro(request):
-    return render(request, 'pages/Intro.html', {})
-
 def show_demo(request):
     return render(request, 'pages/Demo.html', {})
 
@@ -479,16 +473,14 @@ def cal_LikeHate(requests):
             for index in range(1, 11):
                 # 해당 영화 타이틀에서 요소 비율 확인.
                 movieTitle = loadData[str(index)]["title"]
-
                 # 해당 영화 타이틀에 대해 dict()
                 movieRatio = OrderedDict()
-
                 for root, dirs, files in os.walk(os.path.join(os.getcwd(), "pages", "static", "File", "Classification")):
                     for f in files:
                         # 해당 영화 제목
-                        if f.split("_DTM")[0] == movieTitle:
+                        if f.split("_DTM")[0] in movieTitle:
                             j_rank = index
-                            
+
                             # 해당 영화제목의 분류 기준.
                             j_tag = f.split("&&")[1].split(".")[0]
                             rf = open(root + "\\" + f, "r", encoding="UTF-8")
@@ -525,5 +517,5 @@ def cal_LikeHate(requests):
 
     else:                       
         print()
-
+    pprint(JSONData)
     return JsonResponse(JSONData, safe=False)
