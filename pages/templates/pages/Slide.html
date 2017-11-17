@@ -29,7 +29,10 @@
     <script src="{% static 'js/tooltipsy.min.js' %}"></script>
     <!--+++++++++++++++++++++++ Text ToolTip Link +++++++++++++++++++++++-->
     
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <!--+++++++++++++++++++++++ Chart js Link  +++++++++++++++++++++++-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <!--+++++++++++++++++++++++ Chart js Link +++++++++++++++++++++++-->
 
     <!-- Demo styles -->
     <style>
@@ -168,54 +171,96 @@
                 dataType:'JSON',
 
                 success:function(data_result){
-                    
-                    for(var i = 1; i <= 10; i++){
-                        // 해당 i 랭크에 대한 데이터 추출
-                        rankData = data_result[i];
-                        
-                        sizeOfSound = rankData['Sound'];
-                        sizeOfStory = rankData['Story'];
-                        sizeOfAct = rankData['Act'];
-                        sizeOfFull = sizeOfSound + sizeOfStory + sizeOfAct;
-                        
-                        alert(sizeOfSound);
+                    if(number == 0){
+                        for(var i = 1; i <= 10; i++){
+                            // 해당 i 랭크에 대한 데이터 추출
+                            rankData = data_result[i];
+                            
+                            sizeOfSound = parseInt(rankData['Sound']);
+                            sizeOfStory = parseInt(rankData['Story']);
+                            sizeOfAct = parseInt(rankData['Act']);
+                            sizeOfFull = sizeOfSound + sizeOfStory + sizeOfAct;
+                            
+                            LikeOfSound = parseInt(rankData['Sound_Ratio']['Like']);
+                            HateOfSound = parseInt(rankData['Sound_Ratio']['Hate']);
+                            LikeOfStory = parseInt(rankData['Story_Ratio']['Like']);
+                            HateOfStory = parseInt(rankData['Story_Ratio']['Hate']);
+                            LikeOfAct = parseInt(rankData['Act_Ratio']['Like']);
+                            HateOfAct = parseInt(rankData['Act_Ratio']['Hate']);
+                            
+                            // 퍼센트 계산
+                            LikeOfSound = LikeOfSound / sizeOfSound * 100;
+                            HateOfSound = HateOfSound / sizeOfSound * 100;
+                            LikeOfStory = LikeOfStory / sizeOfStory * 100;
+                            HateOfStory = HateOfStory / sizeOfStory * 100;
+                            LikeOfAct = LikeOfAct / sizeOfAct * 100;
+                            HateOfAct = HateOfAct / sizeOfAct * 100;
+                            
+                            LikeOfSound = LikeOfSound.toFixed(1);
+                            HateOfSound = HateOfSound.toFixed(1);
+                            LikeOfStory = LikeOfStory.toFixed(1);
+                            HateOfStory = HateOfStory.toFixed(1);
+                            LikeOfAct = LikeOfAct.toFixed(1);
+                            HateOfAct = HateOfAct.toFixed(1);
 
-                        LikeOfSound = rankData['Sound_Ratio'][0];
-                        HateOfSound = rankData['Sound_Ratio'][1];
+                            var ctx = $("#myChart_" + i);
+                            
+                            var chartData = {
+                                datasets: [{
+                                    data: [sizeOfStory, sizeOfAct, sizeOfSound],
+                                    backgroundColor: [
+                                        '#143f6e',
+                                        '#6e1614',
+                                        '#6c6e14'
+                                    ],
+                                    borderColor:[
+                                        '#143f6e',
+                                        '#6e1614',
+                                        '#6c6e14'
+                                    ],
+                                    borderWidth:1
+                                }],
 
-                        LikeOfStory = rankData['Story_Ratio'][0];
-                        HateOfStory = rankData['Story_Ratio'][1];
+                                // These labels appear in the legend and in the tooltips when hovering different arcs
+                                labels: [
+                                    'Story',
+                                    'Act',
+                                    'Sound'
+                                ]
+                            };
 
-                        LikeOfAct = rankData['Act_Ratio'][0];
-                        HateOfAct = rankData['Act_Ratio'][1];
+                            var myPieChart = new Chart(ctx,{
+                                type: 'pie',
+                                data: chartData,
+                                options: {
+                                    title: {
+                                        display: true,
+                                        fontSize:'18',
+                                        fontColor:'white',
+                                        fontFamily:"'Times New Roman'",
+                                        text: 'Film Review Ratio'
+                                    },
+                                    events:["mousemove", "mouseout", "click"]
+                                }
+                            });
 
-                        //++ google pie chart ++ 
-                        google.charts.load('current', {'packages':['corechart']});
-                        google.charts.setOnLoadCallback(drawChart);
-                        //++ google pie chart ++ 
+                            $('div#summaryBox_' + i).find('tr:nth-of-type(2)').find('td:nth-of-type(2)').text(LikeOfStory + "%");
+                            $('div#summaryBox_' + i).find('tr:nth-of-type(2)').find('td:nth-of-type(4)').text(HateOfStory + "%");
+                            
+                            $('div#summaryBox_' + i).find('tr:nth-of-type(4)').find('td:nth-of-type(2)').text(LikeOfAct + "%");
+                            $('div#summaryBox_' + i).find('tr:nth-of-type(4)').find('td:nth-of-type(4)').text(HateOfAct + "%");
+                            
+                            $('div#summaryBox_' + i).find('tr:nth-of-type(6)').find('td:nth-of-type(2)').text(LikeOfSound + "%");
+                            $('div#summaryBox_' + i).find('tr:nth-of-type(6)').find('td:nth-of-type(4)').text(HateOfSound + "%");
+                        }
+                    }
+                    else{
+                        $('div#rNp_'+ number).find('table.reviewTable tr').remove();
+                        $('div#rNp_'+ number).find('div.pagination ul').remove();
+                        $('div#summaryBox_' + number).toggle();
                     }
                 }
             });
-        }
-
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-            ['Task', 'Hours per Day'],
-            ['Story',     11],
-            ['Sound',      5],
-            ['Act',  6]
-            ]);
-
-            // var number = n;
-            // alert(number)
-
-            var options = {
-            title: 'My Daily Activities',
-            is3D: true,
-            };
-
-            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-            chart.draw(data, options);
         }
     </SCRIPT>
 </head>
@@ -260,7 +305,7 @@
                     <div class="inner_bot">
                         <nav class="top_menu">
                             <ul>
-                                <li class="menu_li" id="summary_Review_1_btn" onclick="findSummary(1)">Summary</li>
+                                <li class="menu_li" id="summary_Review_1_btn" onclick="setSummary(1)">Summary</li>
                                 <li class="menu_li" id="story_Review_1_btn" onclick="findStory(1)">Story</li>
                                 <li class="menu_li" id="sound_Review_1_btn" onclick="findSound(1)">Sound</li>
                                 <li class="menu_li" id="act_Review_1_btn" onclick="findAct(1)">Act</li>
@@ -271,9 +316,42 @@
                             <table id="myTable_1" class="reviewTable"></table>
                             <div id="pagination_1" class="pagination"></div>
                         </div>
-
+                       
                         <div id="summaryBox_1" class="summaryDiv">
-                            <div id="piechart">s</div>
+                            <canvas id="myChart_1"></canvas>
+                            <div class="LikeHate_Div">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Story</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Acting ability</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Sound effect</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>               
+                                    </tbody>                                           
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -315,7 +393,7 @@
                     <div class="inner_bot">
                         <nav class="top_menu">
                             <ul>
-                                <li class="menu_li" id="summary_Review_2_btn" onclick="findSummary(2)">Summary</li>
+                                <li class="menu_li" id="summary_Review_2_btn" onclick="setSummary(2)">Summary</li>
                                 <li class="menu_li" id="story_Review_2_btn" onclick="findStory(2)">Story</li>
                                 <li class="menu_li" id="sound_Review_2_btn" onclick="findSound(2)">Sound</li>
                                 <li class="menu_li" id="act_Review_2_btn" onclick="findAct(2)">Act</li>
@@ -325,6 +403,43 @@
                         <div id="rNp_2" class="rNp_List">
                             <table id="myTable_2" class="reviewTable"></table>
                             <div id="pagination_2" class="pagination"></div>
+                        </div>
+                        
+                        <div id="summaryBox_2" class="summaryDiv">
+                            <canvas id="myChart_2"></canvas>
+                            <div class="LikeHate_Div">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Story</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Acting ability</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                                <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Sound effect</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>               
+                                    </tbody>                                           
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -365,7 +480,7 @@
                     <div class="inner_bot">
                         <nav class="top_menu">
                             <ul>
-                                <li class="menu_li" id="summary_Review_3_btn" onclick="findSummary(3)">Summary</li>
+                                <li class="menu_li" id="summary_Review_3_btn" onclick="setSummary(3)">Summary</li>
                                 <li class="menu_li" id="story_Review_3_btn" onclick="findStory(3)">Story</li>
                                 <li class="menu_li" id="sound_Review_3_btn" onclick="findSound(3)">Sound</li>
                                 <li class="menu_li" id="act_Review_3_btn" onclick="findAct(3)">Act</li>
@@ -375,6 +490,43 @@
                         <div id="rNp_3" class="rNp_List">
                             <table id="myTable_3" class="reviewTable"></table>
                             <div id="pagination_3" class="pagination"></div>
+                        </div>
+
+                        <div id="summaryBox_3" class="summaryDiv">
+                            <canvas id="myChart_3"></canvas>
+                            <div class="LikeHate_Div">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Story</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Acting ability</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Sound effect</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>               
+                                    </tbody>                                           
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -415,7 +567,7 @@
                     <div class="inner_bot">
                         <nav class="top_menu">
                             <ul>
-                                <li class="menu_li" id="summary_Review_4_btn" onclick="findSummary(4)">Summary</li>
+                                <li class="menu_li" id="summary_Review_4_btn" onclick="setSummary(4)">Summary</li>
                                 <li class="menu_li" id="story_Review_4_btn" onclick="findStory(4)">Story</li>
                                 <li class="menu_li" id="sound_Review_4_btn" onclick="findSound(4)">Sound</li>
                                 <li class="menu_li" id="act_Review_4_btn" onclick="findAct(4)">Act</li>
@@ -425,6 +577,43 @@
                         <div id="rNp_4" class="rNp_List">
                             <table id="myTable_4" class="reviewTable"></table>
                             <div id="pagination_4" class="pagination"></div>
+                        </div>
+
+                        <div id="summaryBox_4" class="summaryDiv">
+                            <canvas id="myChart_4"></canvas>
+                            <div class="LikeHate_Div">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Story</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Acting ability</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Sound effect</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>               
+                                    </tbody>                                           
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -465,7 +654,7 @@
                     <div class="inner_bot">
                         <nav class="top_menu">
                             <ul>
-                                <li class="menu_li" id="summary_Review_5_btn" onclick="findSummary(5)">Summary</li>
+                                <li class="menu_li" id="summary_Review_5_btn" onclick="setSummary(5)">Summary</li>
                                 <li class="menu_li" id="story_Review_5_btn" onclick="findStory(5)">Story</li>
                                 <li class="menu_li" id="sound_Review_5_btn" onclick="findSound(5)">Sound</li>
                                 <li class="menu_li" id="act_Review_5_btn" onclick="findAct(5)">Act</li>
@@ -475,6 +664,43 @@
                         <div id="rNp_5" class="rNp_List">
                             <table id="myTable_5" class="reviewTable"></table>
                             <div id="pagination_5" class="pagination"></div>
+                        </div>
+
+                        <div id="summaryBox_5" class="summaryDiv">
+                            <canvas id="myChart_5"></canvas>
+                            <div class="LikeHate_Div">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Story</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Acting ability</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Sound effect</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>               
+                                    </tbody>                                           
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -515,7 +741,7 @@
                     <div class="inner_bot">
                         <nav class="top_menu">
                             <ul>
-                                <li class="menu_li" id="summary_Review_6_btn" onclick="findSummary(6)">Summary</li>
+                                <li class="menu_li" id="summary_Review_6_btn" onclick="setSummary(6)">Summary</li>
                                 <li class="menu_li" id="story_Review_6_btn" onclick="findStory(6)">Story</li>
                                 <li class="menu_li" id="sound_Review_6_btn" onclick="findSound(6)">Sound</li>
                                 <li class="menu_li" id="act_Review_6_btn" onclick="findAct(6)">Act</li>
@@ -525,6 +751,43 @@
                         <div id="rNp_6" class="rNp_List">
                             <table id="myTable_6" class="reviewTable"></table>
                             <div id="pagination_6" class="pagination"></div>
+                        </div>
+
+                        <div id="summaryBox_6" class="summaryDiv">
+                            <canvas id="myChart_6"></canvas>
+                            <div class="LikeHate_Div">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Story</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Acting ability</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Sound effect</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>               
+                                    </tbody>                                           
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -565,7 +828,7 @@
                     <div class="inner_bot">
                         <nav class="top_menu">
                             <ul>
-                                <li class="menu_li" id="summary_Review_7_btn" onclick="findSummary(7)">Summary</li>
+                                <li class="menu_li" id="summary_Review_7_btn" onclick="setSummary(7)">Summary</li>
                                 <li class="menu_li" id="story_Review_7_btn" onclick="findStory(7)">Story</li>
                                 <li class="menu_li" id="sound_Review_7_btn" onclick="findSound(7)">Sound</li>
                                 <li class="menu_li" id="act_Review_7_btn" onclick="findAct(7)">Act</li>
@@ -575,6 +838,43 @@
                         <div id="rNp_7" class="rNp_List">
                             <table id="myTable_7" class="reviewTable"></table>
                             <div id="pagination_7" class="pagination"></div>
+                        </div>
+
+                        <div id="summaryBox_7" class="summaryDiv">
+                            <canvas id="myChart_7"></canvas>
+                            <div class="LikeHate_Div">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Story</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Acting ability</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Sound effect</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>               
+                                    </tbody>                                           
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -615,7 +915,7 @@
                     <div class="inner_bot">
                         <nav class="top_menu">
                             <ul>
-                                <li class="menu_li" id="summary_Review_8_btn" onclick="findSummary(8)">Summary</li>
+                                <li class="menu_li" id="summary_Review_8_btn" onclick="setSummary(8)">Summary</li>
                                 <li class="menu_li" id="story_Review_8_btn" onclick="findStory(8)">Story</li>
                                 <li class="menu_li" id="sound_Review_8_btn" onclick="findSound(8)">Sound</li>
                                 <li class="menu_li" id="act_Review_8_btn" onclick="findAct(8)">Act</li>
@@ -625,6 +925,43 @@
                         <div id="rNp_8" class="rNp_List">
                             <table id="myTable_8" class="reviewTable"></table>
                             <div id="pagination_8" class="pagination"></div>
+                        </div>
+
+                        <div id="summaryBox_8" class="summaryDiv">
+                            <canvas id="myChart_8"></canvas>
+                            <div class="LikeHate_Div">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Story</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Acting ability</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Sound effect</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>               
+                                    </tbody>                                           
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -665,7 +1002,7 @@
                     <div class="inner_bot">
                         <nav class="top_menu">
                             <ul>
-                                <li class="menu_li" id="summary_Review_9_btn" onclick="findSummary(9)">Summary</li>
+                                <li class="menu_li" id="summary_Review_9_btn" onclick="setSummary(9)">Summary</li>
                                 <li class="menu_li" id="story_Review_9_btn" onclick="findStory(9)">Story</li>
                                 <li class="menu_li" id="sound_Review_9_btn" onclick="findSound(9)">Sound</li>
                                 <li class="menu_li" id="act_Review_9_btn" onclick="findAct(9)">Act</li>
@@ -675,6 +1012,43 @@
                         <div id="rNp_9" class="rNp_List">
                             <table id="myTable_9" class="reviewTable"></table>
                             <div id="pagination_9" class="pagination"></div>
+                        </div>
+
+                        <div id="summaryBox_9" class="summaryDiv">
+                            <canvas id="myChart_9"></canvas>
+                            <div class="LikeHate_Div">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Story</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Acting ability</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Sound effect</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>               
+                                    </tbody>                                           
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -715,7 +1089,7 @@
                     <div class="inner_bot">
                         <nav class="top_menu">
                             <ul>
-                                <li class="menu_li" id="summary_Review_10_btn" onclick="findSummary(10)">Summary</li>
+                                <li class="menu_li" id="summary_Review_10_btn" onclick="setSummary(10)">Summary</li>
                                 <li class="menu_li" id="story_Review_10_btn" onclick="findStory(10)">Story</li>
                                 <li class="menu_li" id="sound_Review_10_btn" onclick="findSound(10)">Sound</li>
                                 <li class="menu_li" id="act_Review_10_btn" onclick="findAct(10)">Act</li>
@@ -725,6 +1099,43 @@
                         <div id="rNp_10" class="rNp_List">
                             <table id="myTable_10" class="reviewTable"></table>
                             <div id="pagination_10" class="pagination"></div>
+                        </div>
+
+                        <div id="summaryBox_10" class="summaryDiv">
+                            <canvas id="myChart_10"></canvas>
+                            <div class="LikeHate_Div">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Story</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Acting ability</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">- Preference for the Movie's Sound effect</td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="preferImg" src="{% static 'Image/Like.png' %}"></td>
+                                            <td></td>
+                                            <td><img class="preferImg" src="{% static 'Image/Hate.png' %}"></td>
+                                            <td></td>
+                                        </tr>               
+                                    </tbody>                                           
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
