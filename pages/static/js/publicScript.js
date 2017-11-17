@@ -44,13 +44,14 @@ function findAct(n){
     });
 }
 
-function findSummary(n){
-    // 일단 보류 기능
-}
-
 function setReview(args, number){
-    $('table.reviewTable').find('tr').remove();
-    $('div.pagination').find('ul').remove();
+    // 새로운 내용을 보여주기 위해서 remove() 실행
+    $('div#rNp_'+ number).find('table.reviewTable tr').remove();
+    $('div#rNp_'+ number).find('div.pagination ul').remove();
+
+    // summary 부분이 보여지고 있다면, visible 속성으로 보이지 않도록 한다.
+    if($('div#summaryBox_' + number).css("display") != "none")
+        $('div#summaryBox_' + number).toggle();
 
     var len = Object.keys(args).length;
 

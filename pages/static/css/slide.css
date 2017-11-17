@@ -215,18 +215,57 @@ div.pagination{
 }
 
 div.summaryDiv{
-	position:absolute;
+    position:absolute;
+    /* border:1px solid blue; */
 	left:0;
-	top:58%;
-	width:100%;
-	height:40%;
+	top:60%;
+	width:50%;
+	height:auto;
 }
 
-div.summaryDiv > div{
-    border:1px solid red;
+div.summaryDiv > canvas{
+    /* border:1px solid red; */
     margin:0 auto;
-    width:100%;
+}
+
+div.summaryDiv > div.LikeHate_Div{
+    position:absolute;
+    width:80%;
     height:100%;
+    top:0%;
+    left:100%;
+}
+
+div.LikeHate_Div > table{
+    font-family: 'Times New Roman';
+    color:white;
+}
+
+div.LikeHate_Div > table td{
+	padding:0;
+}
+
+div.LikeHate_Div > table tr:nth-of-type(even) > td{
+	padding-top:1%;
+	padding-bottom:10%;
+	text-align:center;
+}
+
+div.LikeHate_Div > table tr:nth-of-type(even) > td:nth-of-type(even){
+	text-align:left;
+}
+
+div.LikeHate_Div tr:nth-of-type(odd) > td{
+    column-span: 3;
+    color:yellowgreen;
+}
+
+div.LikeHate_Div tr:nth-of-type(even){
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+div.LikeHate_Div img.preferImg{
+    width:20%;
 }
 
 /* 
