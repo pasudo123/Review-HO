@@ -3,7 +3,7 @@
 2017년 졸업작품.<BR>
 
 ## ScreenShot
-!(\Capstone\pages\static\Image\Ho_1.png)<br>
-!(\Capstone\pages\static\Image\Ho_2.png)<br>
-!(\Capstone\pages\static\Image\Ho_3.png)<br>
-!(\Capstone\pages\static\Image\Ho_4.png)<br>
+!(\pages\static\Image\Ho_1.png)
+!(\pages\static\Image\Ho_2.png)
+!(\pages\static\Image\Ho_3.png)
+!(\pages\static\Image\Ho_4.png)
